@@ -18,6 +18,10 @@
 <body>
   <script src="js/scripts.js"></script>
 
+  <div id="navbar">
+  	<a href="register.php">Register</a>
+  </div>
+
   <h1>Hi there!</h1>
 </body>
 </html>
