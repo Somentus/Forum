@@ -8,7 +8,7 @@ if($_SESSION['loggedin']) {
 
 require_once('includes/html.php');
 
-$navbar = navbar()
+$navbar = navbar();
 
 ?>
 
@@ -26,7 +26,7 @@ $navbar = navbar()
 <body>
 	<script src="js/scripts.js"></script>
 
-<?php echo $navbar ?>
+	<?php echo $navbar ?>
   
 </body>
 </html>
