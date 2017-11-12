@@ -6,6 +6,10 @@ if($_SESSION['loggedin']) {
 	echo $_SESSION['id'];
 }
 
+require_once('includes/html.php');
+
+$navbar = navbar()
+
 ?>
 
 <!DOCTYPE HTML>
@@ -22,11 +26,7 @@ if($_SESSION['loggedin']) {
 <body>
   <script src="js/scripts.js"></script>
 
-  <div id="navbar">
-  	<a href="register.php">Register</a>
-  	<a href="login.php">Login</a>
-  </div>
-
-  <h1>Hi there!</h1>
+<?php echo $navbar ?>
+  
 </body>
 </html>
