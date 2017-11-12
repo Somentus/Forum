@@ -16,15 +16,15 @@ $navbar = navbar()
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+	<meta charset="utf-8">
 
-  <title>Functional Forum</title>
+	<title>Functional Forum</title>
 
-  <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-  <script src="js/scripts.js"></script>
+	<script src="js/scripts.js"></script>
 
 <?php echo $navbar ?>
   

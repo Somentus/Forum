@@ -2,10 +2,13 @@
 
 session_start();
 
-$errors = [];
 
-
+require_once('includes/html.php');
 require_once('classes/Database.php');
+
+$navbar = navbar();
+
+$errors = [];
 
 if(isset($_POST['submit'])) {
     $username = $_POST['username'];
@@ -47,6 +50,8 @@ if(isset($_POST['submit'])) {
 
 <body>
     <script src="js/scripts.js"></script>
+
+    <?php echo $navbar ?>
 
     <div id="errors">
   		<?php
