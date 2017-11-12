@@ -37,6 +37,8 @@ if(isset($_POST['submit'])) {
 		$password = password_hash($unVerifiedPassword, PASSWORD_DEFAULT);
 	}
 
+	// TODO: Captcha
+
 	// If no errors, register user
 	if (empty($errors)) {
 		$query = Database::query("INSERT INTO users (id, username, email, password, created_at, updated_at) VALUES (:id, :username, :email, :password, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'username' => $username, 'email' => $email, 'password' => $password]);
