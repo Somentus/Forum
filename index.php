@@ -1,6 +1,10 @@
 <?php
 
+session_start();
 
+if($_SESSION['loggedin']) {
+	echo $_SESSION['id'];
+}
 
 ?>
 
@@ -20,6 +24,7 @@
 
   <div id="navbar">
   	<a href="register.php">Register</a>
+  	<a href="login.php">Login</a>
   </div>
 
   <h1>Hi there!</h1>
