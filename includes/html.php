@@ -18,4 +18,8 @@ function navbar() {
 	}
 }
 
+function indexBody() {
+	
+}
+
 ?>

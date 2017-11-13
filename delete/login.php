@@ -3,36 +3,13 @@
 session_start();
 
 
-require_once('includes/html.php');
 require_once('classes/Database.php');
+require_once('includes/html.php');
+require_once('includes/codes.php');
 
 $navbar = navbar();
 
-$errors = [];
-
-if(isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $user = Database::query("SELECT * FROM users WHERE username= :username", ['username' => $username]);
-    if(count($user) == 1) {
-        // User found
-        $user = $user[0];
-
-        $passwordHash = $user['password'];
-        if(password_verify($password, $passwordHash)) {
-            // Correct password
-            $_SESSION['loggedin'] = true;
-            $_SESSION['id'] = $user['id'];
-            header('location:index.php');
-            exit();
-
-        } else {
-            // TODO: After X tries, wait Y seconds before you can retry logging in to prevent spamming
-            $errors[] = "Incorrect password!";
-        }
-    }
-}
+$errors = login();
 
 ?>
 

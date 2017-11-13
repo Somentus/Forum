@@ -1,0 +1,29 @@
+a POST has:
+- ID
+- Body
+- User
+- Time posted
+- Time updated
+- Topic
+
+a TOPIC has:
+- ID
+- Title
+- User
+- Time posted
+- Time updated
+- Forum
+- Pinned
+- Tag/prefix/type?
+
+a FORUM has:
+- ID
+- Title
+- Category or forum
+- Is subforum
+- Order
+
+a CATEGORY has:
+- ID
+- Name
+- Order
