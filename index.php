@@ -11,8 +11,6 @@ require_once('includes/codes.php');
 
 $navbar = navbar();
 
-$body = indexBody();
-
 $loginErrors = login();
 $registerErrors = register();
 
@@ -35,8 +33,6 @@ $registerErrors = register();
 
 	<?php echo $navbar ?>
 
-	<?php echo $body ?>
-
 	<div id="errors">
   		<?php
   			foreach($loginErrors as $error) {
@@ -48,13 +44,7 @@ $registerErrors = register();
   		?>
   	</div>
 
-  	<button name="toggleLogin" onclick="document.getElementById('loginWrapper').style.display='block'; document.getElementById('registerWrapper').style.display='none';">Login</button>
-  	<button name="toggleRegister" onclick="document.getElementById('loginWrapper').style.display='none'; document.getElementById('registerWrapper').style.display='block';">Register</button>
-
-  	<button name="loginTest" onclick="toggleLogin();" >Login Test</button>
-  	<button name="registerTest" onclick="toggleRegister();" >Register Test</button>
-
-  	<div id="loginWrapper">
+  	<div id="loginWrapper" style="display:none">
 		<form action="index.php" method="POST">
 			<h3>Username:</h3>
 			<input type="text" name="username" required/><p />
@@ -67,7 +57,7 @@ $registerErrors = register();
   	</div>
 
   	<div id="registerWrapper" style="display:none">
-	  	<form action="register.php" method="POST">
+	  	<form action="index.php" method="POST">
 			<h3>Username:</h3>
 			<input type="text" name="username" /><p />
 

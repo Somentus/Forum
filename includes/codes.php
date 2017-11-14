@@ -24,8 +24,10 @@ function login() {
 
 	        } else {
 	            // TODO: After X tries, wait Y seconds before you can retry logging in to prevent spamming
-	            $errors[] = "Incorrect password!";
+	            $errors[] = "User not found or password incorrect.";
 	        }
+	    } else {
+	    	$errors[] = "User not found or password incorrect.";
 	    }
 	}
 
