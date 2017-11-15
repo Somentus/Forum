@@ -4,6 +4,9 @@ session_start();
 
 if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
 	echo $_SESSION['id'];
+	$bodyType = "forum";
+} else {
+	$bodyType = "portal";
 }
 
 require_once('includes/html.php');
@@ -11,8 +14,12 @@ require_once('includes/codes.php');
 
 $navbar = navbar();
 
-$loginErrors = login();
-$registerErrors = register();
+$errors = [];
+if(isset($_POST['login'])) {
+	$errors = login();
+} else if (isset($_POST['register'])) {
+	$errors = register();
+}
 
 ?>
 
@@ -35,10 +42,7 @@ $registerErrors = register();
 
 	<div id="errors">
 		<?php
-			foreach($loginErrors as $error) {
-				echo $error."<br />";
-			}
-			foreach($registerErrors as $error) {
+			foreach($errors as $error) {
 				echo $error."<br />";
 			}
 		?>
