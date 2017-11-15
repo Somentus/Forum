@@ -48,7 +48,7 @@ if(isset($_POST['login'])) {
 		?>
   	</div>
 
-	<?php body(); ?>
+	<?php body($bodyType); ?>
 
 </body>
 </html>
