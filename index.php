@@ -44,30 +44,24 @@ $registerErrors = register();
   		?>
   	</div>
 
-  	<div id="loginWrapper" style="display:none">
+  	<div id="portal" style="display:none">
 		<form action="index.php" method="POST">
 			<h3>Username:</h3>
-			<input type="text" name="username" required/><p />
+			<input type="text" name="username" required/>
+			<br/>
+
+			<div id="email" style="display:none">
+				<h3>Email:</h3>
+				<input id="email" type="email" name="email" />
+			</div>
+			<br/>
 
 			<h3>Password:</h3>
-			<input type="password" name="password" required/><p />
+			<input type="password" name="password" required/>
+			<br/>
 
-			<input type="submit" name="login" value="Login" /><p />
-		</form>
-  	</div>
-
-  	<div id="registerWrapper" style="display:none">
-	  	<form action="index.php" method="POST">
-			<h3>Username:</h3>
-			<input type="text" name="username" /><p />
-
-			<h3>Email:</h3>
-			<input type="email" name="email" /><p />
-
-			<h3>Password:</h3>
-			<input type="password" name="password" /><p />
-
-			<input type="submit" name="register" value="Register" /><p />
+			<input id="submit" type="submit" name="login" value="Login" />
+			<br/>
 		</form>
 	</div>
 
