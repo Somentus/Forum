@@ -36,12 +36,17 @@ function login() {
 	        $user = $user[0];
 
 	        $passwordHash = $user['password'];
+
 	        if(password_verify($password, $passwordHash)) {
-	            // Correct password
 	            $_SESSION['loggedin'] = true;
 	            $_SESSION['id'] = $user['id'];
-	            header('location:index.php');
-	            exit();
+	        	if($user['is_admin'] == true) {
+	        		$_SESSION['is_admin'] = true;
+		            header('location:admin.php');
+	        	} else {        		
+		            header('location:index.php');
+	        	}
+		        exit();
 
 	        } else {
 	            // TODO: After X tries, wait Y seconds before you can retry logging in to prevent spamming
@@ -131,14 +136,16 @@ function body($type) {
 		';
 	}
 
-	$categories = Database::query("SELECT * FROM categories");
+	if($type == "portal" || $type == "forum") {
+		$categories = Database::query("SELECT * FROM categories");
 
-	foreach($categories as $category) {
-		echo "<div id=".strtolower($category['name']).">";
-			$forums = Database::query("SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
-			foreach($forums as $forum) {
-				echo $forum['name'];
-			}
-		echo "</div>";
+		foreach($categories as $category) {
+			echo "<div id=".strtolower($category['name']).">";
+				$forums = Database::query("SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
+				foreach($forums as $forum) {
+					// echo $forum['name'];
+				}
+			echo "</div>";
+		}
 	}
 }
