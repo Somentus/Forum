@@ -9,7 +9,7 @@ function navbar() {
 		return '
 		<div id="navbar">
 			<form action="logout.php" method="POST" >
-    			<input type="submit" name="submit" value="Log Out" />
+    			<input type="submit" name="logout" value="Log Out" />
 			</form>
 	  	</div>';
 	} else {
