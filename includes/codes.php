@@ -84,27 +84,44 @@ function register() {
 	return $errors;
 }
 
-function body() {
-	echo '
-	<div id="portal" style="display:none">
-		<form action="index.php" method="POST">
-			<h3>Username:</h3>
-			<input type="text" name="username" required/>
-			<br/>
+function body($type) {
+	if($type == "portal") {
+		echo '
+		<div id="portal" style="display:none">
+			<form action="index.php" method="POST">
+				<h3>Username:</h3>
+				<input type="text" name="username" required/>
+				<br/>
 
-			<div id="email" style="display:none">
-				<h3>Email:</h3>
-				<input id="email" type="email" name="email" />
-			</div>
-			<br/>
+				<div id="email" style="display:none">
+					<h3>Email:</h3>
+					<input id="email" type="email" name="email" />
+				</div>
+				<br/>
 
-			<h3>Password:</h3>
-			<input type="password" name="password" required/>
-			<br/>
+				<h3>Password:</h3>
+				<input type="password" name="password" required/>
+				<br/>
 
-			<input id="submit" type="submit" name="login" value="Login" />
-			<br/>
-		</form>
+				<input id="submit" type="submit" name="login" value="Login" />
+				<br/>
+			</form>
+		</div>
+		';
+	}
+
+	// Echo Forum content
+	$categories = Database::query("SELECT * FROM categories ");
+
+	echo "
+	<div id='categories' >
+	";
+
+	foreach($categories as $category) {
+		
+	}
+	
+	echo "
 	</div>
-	';
+	";
 }
