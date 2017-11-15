@@ -9,7 +9,6 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
 	$bodyType = "portal";
 }
 
-require_once('includes/html.php');
 require_once('includes/codes.php');
 
 $navbar = navbar();
@@ -48,7 +47,7 @@ if(isset($_POST['login'])) {
 		?>
   	</div>
 
-	<?php body(); ?>
+	<?php body($bodyType); ?>
 
 </body>
 </html>

@@ -10,11 +10,11 @@ a TOPIC has:
 - ID
 - Title
 - User
-- Time posted
-- Time updated
 - Forum
 - Pinned
 - Tag/prefix/type?
+- Time posted
+- Time updated
 
 a FORUM has:
 - ID
@@ -22,8 +22,12 @@ a FORUM has:
 - Category or forum
 - Is subforum
 - Order
+- Time posted
+- Time updated
 
 a CATEGORY has:
 - ID
 - Name
-- Order
+- Priority
+- Time posted
+- Time updated

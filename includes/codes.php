@@ -2,6 +2,27 @@
 
 require_once('classes/database.php');
 
+function navbar() {
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
+		// Return navbar for logged in user
+		// TODO: Add navbar for logged in user
+		return '
+		<div id="navbar">
+			<form action="logout.php" method="POST" >
+    			<input type="submit" name="submit" value="Log Out" />
+			</form>
+	  	</div>';
+	} else {
+		// Return navbar for guest
+		return '
+		<div id="navbar">
+	  		<button name="loginTest" onclick="togglePortal(\'login\');" >Login Test</button>
+		  	<button name="registerTest" onclick="togglePortal(\'register\');" >Register Test</button>
+		  	<button name="registerTest" onclick="togglePortal(\'close\');" >X</button>
+	  	</div>';
+	}
+}
+
 function login() {
 	$errors = [];
 
@@ -84,27 +105,29 @@ function register() {
 	return $errors;
 }
 
-function body() {
-	echo '
-	<div id="portal" style="display:none">
-		<form action="index.php" method="POST">
-			<h3>Username:</h3>
-			<input type="text" name="username" required/>
-			<br/>
+function body($type) {
+	if($type == "portal") {
+		echo '
+		<div id="portal" style="display:none">
+			<form action="index.php" method="POST">
+				<h3>Username:</h3>
+				<input type="text" name="username" required/>
+				<br/>
 
-			<div id="email" style="display:none">
-				<h3>Email:</h3>
-				<input id="email" type="email" name="email" />
-			</div>
-			<br/>
+				<div id="email" style="display:none">
+					<h3>Email:</h3>
+					<input id="email" type="email" name="email" />
+				</div>
+				<br/>
 
-			<h3>Password:</h3>
-			<input type="password" name="password" required/>
-			<br/>
+				<h3>Password:</h3>
+				<input type="password" name="password" required/>
+				<br/>
 
-			<input id="submit" type="submit" name="login" value="Login" />
-			<br/>
-		</form>
-	</div>
-	';
+				<input id="submit" type="submit" name="login" value="Login" />
+				<br/>
+			</form>
+		</div>
+		';
+	}
 }
