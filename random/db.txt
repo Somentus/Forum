@@ -18,12 +18,14 @@ a TOPIC has:
 
 a FORUM has:
 - ID
-- Title
-- Category or forum
+- Name
+- Category_id
 - Is subforum
-- Order
+- Priority
 - Time posted
 - Time updated
+
+- Category or forum
 
 a CATEGORY has:
 - ID
