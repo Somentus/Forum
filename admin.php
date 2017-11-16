@@ -2,10 +2,8 @@
 
 session_start();
 
-// Verify if is Admin
-if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && $_SESSION['is_admin'] == true) {
-	
-} else {
+// Redirect if not admin
+if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && $_SESSION['is_admin'] == true)) {
 	header('Location: /');
 	exit();
 }
@@ -33,7 +31,7 @@ if(isset($_POST['admin'])) {
 </head>
 
 <body>
-	
+
 	<div id="adminLinks">
 		<a href="admin/categories.php">Categories</a>
 		<a href="admin/forums.php">Forums</a>

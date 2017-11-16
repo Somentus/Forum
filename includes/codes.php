@@ -1,7 +1,5 @@
 <?php
 
-require_once('classes/database.php');
-
 function navbar() {
 	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
 		// Return navbar for logged in user
@@ -148,4 +146,54 @@ function body($type) {
 			echo "</div>";
 		}
 	}
+}
+
+function adminCategories() {
+	$categories = Database::query("SELECT * FROM categories");
+
+	echo "
+		<div class='container'>
+			<form action='categories.php' method='POST'>
+				<div class='row' align='right' >
+					<input type='text' name='name' required/>
+					<input id='categories' type='submit' name='categories' value='Add Category' />
+				</div>
+			</form>
+
+			<br/>
+			
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Priority</th>
+						<th>Created At</th>
+						<th>Updated At</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>";
+	foreach($categories as $category) {
+		$id = $category['id'];
+		$name = $category['name'];
+		$priority = $category['priority'];
+		$created_at = $category['created_at'];
+		$updated_at = $category['updated_at'];
+
+		echo "		<tr>
+						<td>$id</td>
+						<td>$name</td>
+						<td>$priority</td>
+						<td>$created_at</td>
+						<td>$updated_at</td>
+						<td>X</td>
+					</tr>";
+
+	}	
+	echo "
+				</tbody>
+			</table>
+		</div>
+	";
 }
