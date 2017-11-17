@@ -11,6 +11,11 @@ if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SE
 require_once('../includes/codes.php');
 require_once('../classes/database.php');
 
+$errors = [];
+if(isset($_POST['delete'])) {
+	$errors = categories();
+}
+
 ?>
 
 <!DOCTYPE HTML>

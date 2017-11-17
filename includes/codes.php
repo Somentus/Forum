@@ -187,7 +187,7 @@ function adminCategories() {
 						<td>$priority</td>
 						<td>$created_at</td>
 						<td>$updated_at</td>
-						<td>X</td>
+						<td><form action='categories.php' method='POST'><input type='hidden' name='id' value='$id' /><input type='submit' name='delete' value='X' /></form></td>
 					</tr>";
 
 	}	
@@ -196,4 +196,8 @@ function adminCategories() {
 			</table>
 		</div>
 	";
+}
+
+function categories() {
+	if(isset($_POST['delete']))
 }
