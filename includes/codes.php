@@ -14,8 +14,8 @@ function navbar() {
 		// Return navbar for guest
 		return '
 		<div id="navbar">
-	  		<button name="loginTest" onclick="togglePortal(\'login\');" >Login Test</button>
-		  	<button name="registerTest" onclick="togglePortal(\'register\');" >Register Test</button>
+	  		<button name="loginTest" onclick="togglePortal(\'login\');" >Login</button>
+		  	<button name="registerTest" onclick="togglePortal(\'register\');" >Register</button>
 		  	<button name="registerTest" onclick="togglePortal(\'close\');" >X</button>
 	  	</div>';
 	}
@@ -199,5 +199,7 @@ function adminCategories() {
 }
 
 function categories() {
-	if(isset($_POST['delete']))
+	if(isset($_POST['delete'])) {
+
+	}
 }
