@@ -14,9 +14,9 @@ function navbar() {
 		// Return navbar for guest
 		return '
 		<div id="navbar">
-	  		<button name="loginTest" onclick="togglePortal(\'login\');" >Login</button>
-		  	<button name="registerTest" onclick="togglePortal(\'register\');" >Register</button>
-		  	<button name="registerTest" onclick="togglePortal(\'close\');" >X</button>
+	  		<button name="login" onclick="togglePortal(\'login\');" >Login</button>
+		  	<button name="register" onclick="togglePortal(\'register\');" >Register</button>
+		  	<button name="closePortal" onclick="togglePortal(\'close\');" >X</button>
 	  	</div>';
 	}
 }
