@@ -12,7 +12,7 @@ require_once('../includes/admin.php');
 
 $errors = [];
 if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority'])) {
-	$errors = categories();
+	$errors = forums();
 }
 
 ?>
@@ -45,7 +45,7 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 	  	</div>
 	</div>
 
-	<?php adminCategories(); ?>
+	<?php adminForums(); ?>
 
 </body>
 </html>
