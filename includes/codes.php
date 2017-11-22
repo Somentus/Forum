@@ -140,12 +140,31 @@ function body($type) {
 		$categories = Database::query("SELECT * FROM categories");
 
 		foreach($categories as $category) {
-			echo "<div id=".strtolower($category['name']).">";
+			echo "<div class='row'>";
+				echo ucfirst($category['name']);
 				$forums = Database::query("SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 				foreach($forums as $forum) {
-					echo $forum['name'];
+					echo "
+						<div class='col-md-12'>
+							<div class='row' style='border: 1px solid black'>
+								<div class='col-md-6'>
+									<a href='forums.php?id=".$forum['id']."''>".ucfirst($forum['name'])."</a>
+								</div>
+								<div class='col-md-6'>
+									<span class='float-right'>
+										<span class='float-right'>
+											LATEST TOPIC
+										</span>
+										<br/>
+										Somentus - 10 minutes ago
+									</span>
+								</div>
+							</div>
+						</div>";
 				}
-			echo "</div>";
+			echo "
+				</div>
+				<br />";
 		}
 	}
 }
