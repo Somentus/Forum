@@ -26,7 +26,7 @@ function adminCategories() {
 		<div class='container'>
 			<form action='categories.php' method='POST'>
 				<input type='text' name='name' required/>
-				<input id='add' type='submit' name='add' value='Add Category' />
+				<input id='add' type='submit' name='add' value='Add Category' class='btn btn-primary'/>
 			</form>
 
 			<br/>
@@ -166,7 +166,7 @@ function adminForums() {
 
 	echo "
              	</select>
-				<input id='add' type='submit' name='add' value='Add Forum' />
+				<input id='add' type='submit' name='add' value='Add Forum' class='btn btn-primary'/>
 			</form>
 
 			<br/>
