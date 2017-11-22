@@ -40,7 +40,7 @@ function login() {
 	            $_SESSION['id'] = $user['id'];
 	        	if($user['is_admin'] == true) {
 	        		$_SESSION['is_admin'] = true;
-		            header('location:admin.php');
+		            header('location:admin/categories.php');
 	        	} else {        		
 		            header('location:index.php');
 	        	}
