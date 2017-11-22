@@ -7,7 +7,6 @@ function navbar() {
 			<div class='col-3'>
 				<a href='./categories.php'>Categories</a>
 				<a href='./forums.php'>Forums</a>
-				<a href='./users.php'>Users</a>
 			</div>
 		</div>
 	</div>
