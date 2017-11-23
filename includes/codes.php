@@ -60,7 +60,6 @@ function login() {
 }
 
 function register() {
-	require_once('classes/database.php');
 	$errors = [];
 
 	if(isset($_POST['register'])) {
