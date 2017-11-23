@@ -9,7 +9,6 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
 }
 
 require_once('includes/codes.php');
-require_once('classes/database.php');
 
 $navbar = navbar();
 
