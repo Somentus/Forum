@@ -3,8 +3,9 @@ https://try.discourse.org/
 https://blog.codinghorror.com/the-god-login/
 https://blog.codinghorror.com/
 https://blog.codinghorror.com/trees-treeviews-and-ui/
-http://flarum.org/
+https://discuss.flarum.org/
 http://www.conquerclub.com/forum/index.php
 https://stackoverflow.com/questions/1545357/how-to-check-if-a-user-is-logged-in-in-php
 https://secure.php.net/manual/en/function.password-verify.php
 https://secure.php.net/manual/en/faq.passwords.php
+http://shoelace.io/

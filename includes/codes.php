@@ -7,16 +7,16 @@ function navbar() {
 		return '
 		<div id="navbar">
 			<form action="logout.php" method="POST" >
-    			<input type="submit" name="logout" value="Log Out" />
+    			<input type="submit" name="logout" value="Log Out" class="btn btn-light"/>
 			</form>
 	  	</div>';
 	} else {
 		// Return navbar for guest
 		return '
 		<div id="navbar">
-	  		<button name="login" onclick="togglePortal(\'login\');" >Login</button>
-		  	<button name="register" onclick="togglePortal(\'register\');" >Register</button>
-		  	<button name="closePortal" onclick="togglePortal(\'close\');" >X</button>
+	  		<button id="navbarLogin" name="login" onclick="togglePortal(\'login\');" class="btn btn-secondary" >Login</button>
+		  	<button id="navbarRegister"name="register" onclick="togglePortal(\'register\');" class="btn btn-secondary" >Register</button>
+		  	<button id="navbarClose"name="closePortal" onclick="togglePortal(\'close\');" class="btn btn-light" >X</button>
 	  	</div>';
 	}
 }
@@ -115,22 +115,24 @@ function body($type) {
 			<form action="index.php" method="POST">
 				<h3>Username:</h3>
 				<input type="text" name="username" required/>
-				<br/>
+				<br />
 
 				<div id="email" style="display:none">
 					<h3>Email:</h3>
 					<input id="email" type="email" name="email" />
 				</div>
-				<br/>
+				<br />
 
 				<h3>Password:</h3>
 				<input type="password" name="password" required/>
-				<br/>
+				<br />
+				<br />
 
-				<input id="submit" type="submit" name="login" value="Login" />
-				<br/>
+				<input id="submit" type="submit" name="login" value="Login" class="btn btn-primary" />
+				<br />
 			</form>
 		</div>
+		<br />
 		';
 	}
 
@@ -138,12 +140,31 @@ function body($type) {
 		$categories = Database::query("SELECT * FROM categories");
 
 		foreach($categories as $category) {
-			echo "<div id=".strtolower($category['name']).">";
+			echo "<div class='row'>";
+				echo ucfirst($category['name']);
 				$forums = Database::query("SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 				foreach($forums as $forum) {
-					// echo $forum['name'];
+					echo "
+						<div class='col-md-12'>
+							<div class='row' style='border: 1px solid black'>
+								<div class='col-md-6'>
+									<a href='forums.php?id=".$forum['id']."''>".ucfirst($forum['name'])."</a>
+								</div>
+								<div class='col-md-6'>
+									<span class='float-right'>
+										<span class='float-right'>
+											LATEST TOPIC
+										</span>
+										<br/>
+										Somentus - 10 minutes ago
+									</span>
+								</div>
+							</div>
+						</div>";
 				}
-			echo "</div>";
+			echo "
+				</div>
+				<br />";
 		}
 	}
 }

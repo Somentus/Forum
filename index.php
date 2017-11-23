@@ -3,7 +3,6 @@
 session_start();
 
 if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
-	echo $_SESSION['id'];
 	$bodyType = "forum";
 } else {
 	$bodyType = "portal";
@@ -38,17 +37,23 @@ if(isset($_POST['login'])) {
 
 <body>
 
-	<?php echo $navbar ?>
+	<div class="container">
 
-	<div id="errors">
-		<?php
-			foreach($errors as $error) {
-				echo $error."<br />";
-			}
-		?>
-  	</div>
+		<br />
+		<?php echo $navbar ?>
+		<br />
 
-	<?php body($bodyType); ?>
+		<div id="errors">
+			<?php
+				foreach($errors as $error) {
+					echo $error."<br />";
+				}
+			?>
+	  	</div>
+	  	
+		<?php body($bodyType); ?>
+
+	</div>
 
 </body>
 </html>

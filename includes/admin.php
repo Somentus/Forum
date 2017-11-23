@@ -26,7 +26,7 @@ function adminCategories() {
 		<div class='container'>
 			<form action='categories.php' method='POST'>
 				<input type='text' name='name' required/>
-				<input id='add' type='submit' name='add' value='Add Category' />
+				<input id='add' type='submit' name='add' value='Add Category' class='btn btn-primary'/>
 			</form>
 
 			<br/>
@@ -108,8 +108,16 @@ function categories() {
 		$category = $query[0];
 		$name = $category['name'];
 
-		$query = Database::query("DELETE FROM categories WHERE id= :id limit 1", ['id' => $id]);
-		$errors[] = "Deleted '$name' from categories.";
+		// Check if category contains any forums
+		$query = Database::query("SELECT * FROM forums WHERE category_id= :category_id", ['category_id' => $id]);
+		if( count($query) > 0) {
+			$errors[] = "Category still contains forums. Delete the forums before deleting the category.";
+		}
+
+		if(empty($errors)) {
+			$query = Database::query("DELETE FROM categories WHERE id= :id limit 1", ['id' => $id]);
+			$errors[] = "Deleted '$name' from categories.";
+		}
 	} else if (isset($_POST['priority'])) {
 		$errors = [];
 
@@ -153,12 +161,12 @@ function adminForums() {
 				foreach($categories as $category) {
 					$id = $category['id'];
 					$name = ucfirst($category['name']);
-					echo "<option>$id</option>";
+					echo "<option value='$id'>$name</option>";
 				}
 
 	echo "
              	</select>
-				<input id='add' type='submit' name='add' value='Add Forum' />
+				<input id='add' type='submit' name='add' value='Add Forum' class='btn btn-primary'/>
 			</form>
 
 			<br/>
