@@ -1,35 +1,42 @@
 a POST has:
-- ID
-- Body
-- User
-- Time posted
-- Time updated
-- Topic
+- id
+- body
+- user_id
+- topic_id
+- created_at
+- updated_at
 
 a TOPIC has:
-- ID
-- Title
-- User
-- Forum
-- Pinned
-- Tag/prefix/type?
-- Time posted
-- Time updated
+- id
+- title
+- forum_id
+- user_id
+- pinned
+- created_at
+- updated_at
 
 a FORUM has:
-- ID
-- Name
-- Category_id
-- Is subforum
-- Priority
-- Time posted
-- Time updated
+- id
+- name
+- category_id
+- is_subforum
+- priority
+- created_at
+- updated_at
 
 - Category or forum
 
 a CATEGORY has:
-- ID
-- Name
-- Priority
-- Time posted
-- Time updated
+- id
+- name
+- priority
+- created_at
+- updated_at
+
+IDEA:
+give TITLE A separate table:
+
+a TITLE has:
+- id
+- tag/prefix
+- body

@@ -2,23 +2,16 @@
 
 session_start();
 
-if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
-	$bodyType = "forum";
-} else {
-	$bodyType = "portal";
-}
-
 require_once('includes/DB.php');
 $pdo = DB();
 require_once('includes/codes.php');
+require_once('includes/create_topic.php');
 
 $navbar = navbar();
 
 $errors = [];
-if(isset($_POST['login'])) {
-	$errors = login($pdo);
-} else if (isset($_POST['register'])) {
-	$errors = register($pdo);
+if(isset($_POST['create_topic'])) {
+	$errors = create_topic($pdo);
 }
 
 ?>
@@ -41,7 +34,7 @@ if(isset($_POST['login'])) {
 	<div class="container">
 
 		<br />
-		<?php echo $navbar ?>
+		<?php echo $navbar; ?>
 		<br />
 
 		<div id="errors">
@@ -51,8 +44,20 @@ if(isset($_POST['login'])) {
 				}
 			?>
 	  	</div>
-	  	
-		<?php body($bodyType, $pdo); ?>
+
+		<form action="create_topic.php?forum_id=<?php echo $_GET['forum_id']; ?>" method="POST">
+			<div class="form-group">
+				<label for="topic_title">Topic Title</label>
+				<input type="text" name="topic_title" class="form-control" id="topic_title" placeholder="Topic Title">
+			</div>
+			<div class="form-group">
+				<label for="topic_body">Body</label>
+				<textarea name="topic_body" class="form-control" id="topic_body" rows="3"></textarea>
+			</div>
+			<div class="text-center">
+				<button type="submit" name="create_topic" class="btn btn-primary">Submit</button>
+			</div>
+		</form>
 
 	</div>
 
