@@ -1,6 +1,6 @@
 <?php
 
-function create_topic() {
+function create_topic($pdo) {
 	$errors = [];
 
 	if(isset($_POST['create_topic'])) {
@@ -23,21 +23,19 @@ function create_topic() {
 		- topic_id 
 		*/
 
-		require_once('classes/Database.php');
-
 		// If no errors, register user
 		if (empty($errors)) {
-			$query = Database::query("INSERT INTO topics (title, forum_id, user_id) VALUES (:title, :forum_id, :user_id)", ['title' => $title, 'forum_id' => $forum_id, 'user_id' => $user_id]);
-			$id = $query[0]['id'];
+			$query = query($pdo, "INSERT INTO topics (title, forum_id, user_id) VALUES (:title, :forum_id, :user_id)", ['title' => $title, 'forum_id' => $forum_id, 'user_id' => $user_id]);
+			$topic_id = $pdo->lastInsertId();
 
-			$query = Database::query("INSERT INTO posts (title, forum_id, user_id) VALUES (:title, :forum_id, :user_id)", ['title' => $title, 'forum_id' => $forum_id, 'user_id' => $user_id]);
+			$query = query($pdo, "INSERT INTO posts (body, user_id, topic_id) VALUES (:body, :user_id, :topic_id)", ['body' => $body, 'user_id' => $user_id, 'topic_id' => $topic_id]);
 
 			$errors[] = "Topic succesfully created.";
+			header('location:topic.php?id='.$topic_id);
 		}
 	}
 
 	return $errors;
-}
 }
 
 ?>

@@ -2,6 +2,8 @@
 
 session_start();
 
+require_once('includes/DB.php');
+$pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/forum.php');
 
@@ -30,7 +32,7 @@ $navbar = navbar();
 		<?php echo $navbar; ?>
 		<br />
 	  	
-		<?php content(); ?>
+		<?php content($pdo); ?>
 
 	</div>
 

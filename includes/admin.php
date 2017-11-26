@@ -17,10 +17,8 @@ function navbar() {
 	<br />";
 }
 
-function adminCategories() {
-	require_once('../classes/Database.php');
-
-	$categories = Database::query("SELECT * FROM categories");
+function adminCategories($pdo) {
+	$categories = query($pdo, "SELECT * FROM categories");
 
 	echo "
 		<div class='container'>
@@ -79,15 +77,13 @@ function adminCategories() {
 	";
 }
 
-function categories() {
-	require_once('../classes/Database.php');
-
+function categories($pdo) {
 	if(isset($_POST['add'])) {
 		$errors = [];
 		$unverifiedName = $_POST['name'];
 
 		// Check if category already exists
-		$categoryAlreadyExists = Database::query("SELECT * FROM categories WHERE name= :name", ['name' => $unverifiedName]);
+		$categoryAlreadyExists = query($pdo, "SELECT * FROM categories WHERE name= :name", ['name' => $unverifiedName]);
 		if(count($categoryAlreadyExists) >= 1) {
 			$errors[] = "Category already exists.";
 		} else {
@@ -96,7 +92,7 @@ function categories() {
 
 		// If no errors, add category
 		if (empty($errors)) {
-			$query = Database::query("INSERT INTO categories (id, name, priority, created_at, updated_at) VALUES (:id, :name, :priority, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'name' => $name, 'priority' => 0]);
+			$query = query($pdo, "INSERT INTO categories (id, name, priority, created_at, updated_at) VALUES (:id, :name, :priority, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'name' => $name, 'priority' => 0]);
 			$errors[] = "Category succesfully added.";
 		}
 	} else if (isset($_POST['delete'])) {
@@ -104,18 +100,18 @@ function categories() {
 		$id = $_POST['id'];
 
 		// Retrieve category
-		$query = Database::query("SELECT * FROM categories WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $id]);
 		$category = $query[0];
 		$name = $category['name'];
 
 		// Check if category contains any forums
-		$query = Database::query("SELECT * FROM forums WHERE category_id= :category_id", ['category_id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE category_id= :category_id", ['category_id' => $id]);
 		if( count($query) > 0) {
 			$errors[] = "Category still contains forums. Delete the forums before deleting the category.";
 		}
 
 		if(empty($errors)) {
-			$query = Database::query("DELETE FROM categories WHERE id= :id limit 1", ['id' => $id]);
+			$query = query($pdo, "DELETE FROM categories WHERE id= :id limit 1", ['id' => $id]);
 			$errors[] = "Deleted '$name' from categories.";
 		}
 	} else if (isset($_POST['priority'])) {
@@ -129,7 +125,7 @@ function categories() {
 		} else if($priority == "Down") {
 			$change--;
 		}
-		$query = Database::query("SELECT * FROM categories WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $id]);
 		$category = $query[0];
 		$oldPriority = $category['priority'];
 		if($oldPriority == 0 && $change == -1) {
@@ -137,7 +133,7 @@ function categories() {
 			$errors[] = "Priority is already 0, can not lower priority.";
 		}
 		$newPriority = $oldPriority + $change;
-		$query = Database::query("UPDATE categories SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
+		$query = query($pdo, "UPDATE categories SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
 		if(empty($errors)) {
 			$errors[] = "Priority succesfully changed by $change to $newPriority.";
 		}
@@ -147,11 +143,9 @@ function categories() {
 	return $errors;
 }
 
-function adminForums() {
-	require_once('../classes/Database.php');
-
-	$forums = Database::query("SELECT * FROM forums");
-	$categories = Database::query("SELECT * FROM categories");
+function adminForums($pdo) {
+	$forums = query($pdo, "SELECT * FROM forums");
+	$categories = query($pdo, "SELECT * FROM categories");
 
 	echo "
 		<div class='container'>
@@ -189,7 +183,7 @@ function adminForums() {
 		$name = ucfirst($forum['name']);
 		$priority = $forum['priority'];
 		$category_id = $forum['category_id'];
-		$category_name = ucfirst(Database::query("SELECT * FROM categories WHERE id= :id", ['id' => $category_id])[0]['name']);
+		$category_name = ucfirst(query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $category_id])[0]['name']);
 		$created_at = $forum['created_at'];
 		$updated_at = $forum['updated_at'];
 
@@ -223,16 +217,14 @@ function adminForums() {
 	";
 }
 
-function forums() {
-	require_once('../classes/Database.php');
-
+function forums($pdo) {
 	if(isset($_POST['add'])) {
 		$errors = [];
 		$unverifiedName = $_POST['name'];
 		$unverifiedCategoryId = $_POST['category'];
 
 		// Check if category exists
-		$category = Database::query("SELECT * FROM categories WHERE id= :id", ['id' => $unverifiedCategoryId]);
+		$category = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $unverifiedCategoryId]);
 		if(count($category) == 0) {
 			$errors[] = "Category not found.";
 		} else {
@@ -240,7 +232,7 @@ function forums() {
 		}
 
 		// Check if forum already exists
-		$forumAlreadyExists = Database::query("SELECT * FROM forums WHERE name= :name", ['name' => $unverifiedName]);
+		$forumAlreadyExists = query($pdo, "SELECT * FROM forums WHERE name= :name", ['name' => $unverifiedName]);
 		if(count($forumAlreadyExists) >= 1) {
 			$errors[] = "Forum already exists.";
 		} else {
@@ -250,7 +242,7 @@ function forums() {
 
 		// If no errors, add forum
 		if (empty($errors)) {
-			$query = Database::query("INSERT INTO forums (id, name, category_id, is_subforum, priority, created_at, updated_at) VALUES (:id, :name, :category_id, 0, :priority, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'name' => $name, 'priority' => 0, 'category_id' => $category_id]);
+			$query = query($pdo, "INSERT INTO forums (id, name, category_id, is_subforum, priority, created_at, updated_at) VALUES (:id, :name, :category_id, 0, :priority, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'name' => $name, 'priority' => 0, 'category_id' => $category_id]);
 			$errors[] = "Forum succesfully added.";
 		}
 	} else if (isset($_POST['delete'])) {
@@ -258,11 +250,11 @@ function forums() {
 		$id = $_POST['id'];
 
 		// Retrieve forum
-		$query = Database::query("SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
 		$forum = $query[0];
 		$name = $forum['name'];
 
-		$query = Database::query("DELETE FROM forums WHERE id= :id limit 1", ['id' => $id]);
+		$query = query($pdo, "DELETE FROM forums WHERE id= :id limit 1", ['id' => $id]);
 		$errors[] = "Deleted '$name' from forums.";
 	} else if (isset($_POST['priority'])) {
 		$errors = [];
@@ -275,7 +267,7 @@ function forums() {
 		} else if($priority == "Down") {
 			$change--;
 		}
-		$query = Database::query("SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
 		$forum = $query[0];
 		$oldPriority = $forum['priority'];
 		if($oldPriority == 0 && $change == -1) {
@@ -283,7 +275,7 @@ function forums() {
 			$errors[] = "Priority is already 0, can not lower priority.";
 		}
 		$newPriority = $oldPriority + $change;
-		$query = Database::query("UPDATE forums SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
+		$query = query($pdo, "UPDATE forums SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
 		if(empty($errors)) {
 			$errors[] = "Priority succesfully changed by $change to $newPriority.";
 		}

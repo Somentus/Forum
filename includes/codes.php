@@ -21,15 +21,14 @@ function navbar() {
 	}
 }
 
-function login() {
-	require_once('classes/database.php');
+function login($pdo) {
 	$errors = [];
 
 	if(isset($_POST['login'])) {
 	    $username = $_POST['username'];
 	    $password = $_POST['password'];
 
-	    $user = Database::query("SELECT * FROM users WHERE username= :username", ['username' => $username]);
+	    $user = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $username]);
 	    if(count($user) == 1) {
 	        // User found
 	        $user = $user[0];
@@ -59,7 +58,7 @@ function login() {
 	return $errors;
 }
 
-function register() {
+function register($pdo) {
 	$errors = [];
 
 	if(isset($_POST['register'])) {
@@ -67,10 +66,10 @@ function register() {
 		$unVerifiedEmail = $_POST['email'];
 		$unVerifiedPassword = $_POST['password'];
 
-		require_once('classes/Database.php');
+		
 
 		// Check if username already exists
-		$usernameAlreadyExists = Database::query("SELECT * FROM users WHERE username= :username", ['username' => $unVerifiedUsername]);
+		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $unVerifiedUsername]);
 		if(count($usernameAlreadyExists) >= 1) {
 			$errors[] = "Username already exists.";
 		} else {
@@ -81,7 +80,7 @@ function register() {
 		if(!filter_var($unVerifiedEmail, FILTER_VALIDATE_EMAIL)) {
 			$errors[] = "Please enter a valid email address." ;
 		} else {
-			$emailAlreadyExists = Database::query("SELECT * FROM users WHERE email= :email", ['email' => $unVerifiedEmail]);
+			$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $unVerifiedEmail]);
 			if(count($emailAlreadyExists) >= 1) {
 				$errors[] = "Email address already exists." ;
 			} else {
@@ -101,7 +100,7 @@ function register() {
 
 		// If no errors, register user
 		if (empty($errors)) {
-			$query = Database::query("INSERT INTO users (id, username, email, password, created_at, updated_at) VALUES (:id, :username, :email, :password, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'username' => $username, 'email' => $email, 'password' => $password]);
+			$query = query($pdo, "INSERT INTO users (id, username, email, password, created_at, updated_at) VALUES (:id, :username, :email, :password, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'username' => $username, 'email' => $email, 'password' => $password]);
 			$errors[] = "User succesfully registered.";
 		}
 	}
@@ -109,8 +108,7 @@ function register() {
 	return $errors;
 }
 
-function body($type) {
-	require_once('classes/database.php');
+function body($type, $pdo) {
 	if($type == "portal") {
 		echo '
 		<div id="portal" style="display:none">
@@ -139,12 +137,12 @@ function body($type) {
 	}
 
 	if($type == "portal" || $type == "forum") {
-		$categories = Database::query("SELECT * FROM categories");
+		$categories = query($pdo, "SELECT * FROM categories");
 
 		foreach($categories as $category) {
 			echo "<div class='row'>";
 				echo ucfirst($category['name']);
-				$forums = Database::query("SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
+				$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 				foreach($forums as $forum) {
 					echo "
 						<div class='col-md-12'>

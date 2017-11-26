@@ -8,11 +8,13 @@ if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SE
 	exit();
 }
 
+require_once('../includes/DB.php');
+$pdo = DB();
 require_once('../includes/admin.php');
 
 $errors = [];
 if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority'])) {
-	$errors = forums();
+	$errors = forums($pdo);
 }
 
 ?>
@@ -32,7 +34,7 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 
 <body>
 
-	<?php navbar(); ?>
+	<?php navbar($pdo); ?>
 
 	<div class="container">
 		<div id="errors">
