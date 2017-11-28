@@ -43,7 +43,7 @@ function adminCategories($pdo) {
 				<tbody>";
 	foreach($categories as $category) {
 		$id = $category['id'];
-		$name = ucfirst($category['name']);
+		$name = $category['name'];
 		$priority = $category['priority'];
 		$created_at = $category['created_at'];
 		$updated_at = $category['updated_at'];
@@ -154,7 +154,7 @@ function adminForums($pdo) {
 				<select name='category' id='category'>";
 				foreach($categories as $category) {
 					$id = $category['id'];
-					$name = ucfirst($category['name']);
+					$name = $category['name'];
 					echo "<option value='$id'>$name</option>";
 				}
 
@@ -180,10 +180,10 @@ function adminForums($pdo) {
 				<tbody>";
 	foreach($forums as $forum) {
 		$id = $forum['id'];
-		$name = ucfirst($forum['name']);
+		$name = $forum['name'];
 		$priority = $forum['priority'];
 		$category_id = $forum['category_id'];
-		$category_name = ucfirst(query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $category_id])[0]['name']);
+		$category_name = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $category_id])[0]['name'];
 		$created_at = $forum['created_at'];
 		$updated_at = $forum['updated_at'];
 

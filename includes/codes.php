@@ -238,14 +238,14 @@ function body($pdo) {
 
 	foreach($categories as $category) {
 		echo "<div class='row'>";
-			echo ucfirst($category['name']);
+			echo $category['name'];
 			$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 			foreach($forums as $forum) {
 				echo "
 					<div class='col-md-12'>
 						<div class='row' style='border: 1px solid black'>
 							<div class='col-md-6'>
-								<a href='forum.php?id=".$forum['id']."''>".ucfirst($forum['name'])."</a>
+								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
 							</div>
 							<div class='col-md-6'>
 								<span class='float-right'>
