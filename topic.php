@@ -7,8 +7,6 @@ $pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/topic.php');
 
-$navbar = navbar();
-
 ?>
 
 <!DOCTYPE HTML>
@@ -29,7 +27,7 @@ $navbar = navbar();
 	<div class="container">
 
 		<br />
-		<?php echo $navbar; ?>
+		<?php navbar($pdo); ?>
 		<br />
 	  	
 		<?php content($pdo); ?>

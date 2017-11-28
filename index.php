@@ -2,17 +2,9 @@
 
 session_start();
 
-if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
-	$bodyType = "forum";
-} else {
-	$bodyType = "portal";
-}
-
 require_once('includes/DB.php');
 $pdo = DB();
 require_once('includes/codes.php');
-
-$navbar = navbar();
 
 $errors = [];
 if(isset($_POST['login'])) {
@@ -38,22 +30,9 @@ if(isset($_POST['login'])) {
 
 <body>
 
+	<br />
 	<div class="container">
-
-		<br />
-		<?php echo $navbar ?>
-		<br />
-
-		<div id="errors">
-			<?php
-				foreach($errors as $error) {
-					echo $error."<br />";
-				}
-			?>
-	  	</div>
-	  	
-		<?php body($bodyType, $pdo); ?>
-
+		<?php navbar($pdo); portal($errors); body($pdo); ?>
 	</div>
 
 </body>

@@ -7,8 +7,6 @@ $pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/create_topic.php');
 
-$navbar = navbar();
-
 $errors = [];
 if(isset($_POST['create_topic'])) {
 	$errors = create_topic($pdo);
@@ -34,7 +32,7 @@ if(isset($_POST['create_topic'])) {
 	<div class="container">
 
 		<br />
-		<?php echo $navbar; ?>
+		<?php navbar($pdo); ?>
 		<br />
 
 		<div id="errors">
