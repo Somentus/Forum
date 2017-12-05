@@ -284,26 +284,22 @@ function body($pdo) {
 							<div class='col-md-6'>";
 
 				$lastPost = lastPost($pdo, $forum['id']);
+				echo "<span class='float-right'>";
 				if(!empty($lastPost)) {
 					$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :user_id", ['user_id' => $lastPost['user_id']])[0];
 					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
 					echo "
-								<span class='float-right'>
-									<span class='float-right'>
-										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
-									</span>
+									<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
 									<br/>
-									".$lastPostUser['username']." - ".$lastPost['created_at'] ."
-								</span>";
+									".$lastPostUser['username']." - ".$lastPost['created_at'];
 				} else {
 					echo "
-								<span class='float-right'>
 									No posts yet.
-								</span>
 					";
 				}
 
 				echo "
+								</span>
 							</div>
 						</div>
 					</div>";

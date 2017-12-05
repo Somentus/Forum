@@ -10,7 +10,6 @@ function content($pdo) {
 	} else if(count($forum) == 1) {
 		// TODO: Verify if user has access to current forum
 
-
 		echo '
 		<div class="row">
 			<div class="col-md-12">
@@ -23,10 +22,24 @@ function content($pdo) {
 			echo "No topics yet!";
 		} else {
 			foreach($topics as $topic) {
+				$lastPostId = query($pdo, "SELECT MAX(id) FROM posts WHERE topic_id = :topic_id", ['topic_id' => $topic['id']])[0]['MAX(id)'];
+				$lastPost = query($pdo, "SELECT * FROM posts WHERE id = :id", ['id' => $lastPostId])[0];
 				echo '
-				<div class="row">
-					<div class="col-md-12">
+				<div class="row" style="border: 1px solid black">
+					<div class="col-md-6">
 						<a href="../topic.php?id='.$topic['id'].'">'.$topic['title'].'</a>
+					</div>
+
+					<div class="col-md-6">
+						<span class="float-right">';
+				if(!empty($lastPost)) {
+						$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $lastPost['user_id']])[0];
+					echo $lastPostUser['username']." - ".$lastPost['created_at'];
+				} else {
+					echo "No posts yet.";
+				}
+				echo '
+						</span>
 					</div>
 				</div>';
 			}
