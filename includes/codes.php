@@ -83,7 +83,7 @@ function navbar($pdo) {
     echo '<ul class="navbar-nav ml-auto">';
 
     // Check if user is logged in
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && $_SESSION['is_admin'] == false) {
         echo '
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
