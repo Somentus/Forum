@@ -65,18 +65,42 @@ function navbar($pdo) {
 
             ';
 
-    for($i = 0; $i < $locationSteps; $i++) {
-        echo '
-            <span class="navbar-text">/</span>
-            <li class="nav-item';
-        if($i == $locationSteps - 1) {
-            echo ' active';
-        }
-        echo '"><a class="nav-link" href="'.$currentLocationFiles[$i].'">'.$currentLocation[$i].'
-                </a>
-            </li>
-        ';
+    if($_SESSION['is_admin'] == true) {
+    	echo '
+    		<span class="navbar-text">|</span>
+    		<li class="nav-item';
+			if($currentLocation[0] == "Categories") {
+				echo ' active';
+			}
+    		echo '" >
+    			<a class="nav-link" href="./categories.php">Categories</a>
+			</li>
+			<span class="navbar-text">|</span>
+			<li class="nav-item';
+
+			if($currentLocation[0] == "Forums") {
+				echo ' active';
+			}
+
+			echo '" >
+				<a class="nav-link" href="./forums.php">Forums</a>
+			</li>
+		';
+    } else {
+	    for($i = 0; $i < $locationSteps; $i++) {
+	        echo '
+	            <span class="navbar-text">/</span>
+	            <li class="nav-item';
+	        if($i == $locationSteps - 1) {
+	            echo ' active';
+	        }
+	        echo '"><a class="nav-link" href="'.$currentLocationFiles[$i].'">'.$currentLocation[$i].'
+	                </a>
+	            </li>
+	        ';
+	    } 
     }
+
 
     echo '</ul>';
 
@@ -85,6 +109,16 @@ function navbar($pdo) {
     // Check if user is logged in
     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && $_SESSION['is_admin'] == false) {
         echo '
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">Log Out</a>
+            </li>
+        ';
+    } else if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && $_SESSION['is_admin'] == true) {
+    	// Placeholder. TODO
+       	echo '
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
             </li>

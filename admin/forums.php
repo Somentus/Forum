@@ -11,6 +11,7 @@ if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SE
 require_once('../includes/DB.php');
 $pdo = DB();
 require_once('../includes/admin.php');
+require_once('../includes/codes.php');
 
 $errors = [];
 if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority'])) {
@@ -51,7 +52,7 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 	  	</div>
 	</div>
 
-	<?php adminForums(); ?>
+	<?php adminForums($pdo); ?>
 
 </body>
 </html>
