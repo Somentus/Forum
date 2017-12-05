@@ -247,14 +247,29 @@ function body($pdo) {
 							<div class='col-md-6'>
 								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
 							</div>
-							<div class='col-md-6'>
+							<div class='col-md-6'>";
+
+				$lastPost = lastPost($pdo, $forum['id']);
+				if(!empty($lastPost)) {
+					$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :user_id", ['user_id' => $lastPost['user_id']])[0];
+					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
+					echo "
 								<span class='float-right'>
 									<span class='float-right'>
-										LATEST TOPIC
+										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
 									</span>
 									<br/>
-									Somentus - 10 minutes ago
+									".$lastPostUser['username']." - ".$lastPost['created_at'] ."
+								</span>";
+				} else {
+					echo "
+								<span class='float-right'>
+									No posts yet.
 								</span>
+					";
+				}
+
+				echo "
 							</div>
 						</div>
 					</div>";
@@ -262,5 +277,15 @@ function body($pdo) {
 		echo "
 			</div>
 			<br />";
+	}
+}
+
+function lastPost($pdo, $forumId) {
+	$lastPostId = query($pdo, "SELECT MAX(id) FROM posts WHERE topic_id IN (SELECT id FROM topics WHERE forum_id = :forum_id)", ['forum_id' => $forumId])[0]['MAX(id)'];
+	$lastPost = query($pdo, "SELECT * FROM posts WHERE id = :id", ['id' => $lastPostId]);
+	if(!empty($lastPost) ) {
+		return $lastPost[0];	
+	} else {
+		return 0;
 	}
 }
