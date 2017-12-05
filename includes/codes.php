@@ -123,14 +123,14 @@ function portal($errors) {
   	</div>
 	<div id="portal" class="portal" style="display:none;">
 		<form action="index.php" method="POST">
-			<h3>Username:</h3>
-			<input type="text" name="username" required/>
-			<br />
-
-			<div id="email" style="display:none">
-				<h3>Email:</h3>
-				<input id="email" type="email" name="email" />
+			
+			<div id="username" style="display:none">
+				<h3>Username:</h3>
+				<input id="usernameField" type="text" name="username" />
 			</div>
+
+			<h3>Email:</h3>
+			<input type="email" name="email" required/>
 			<br />
 
 			<h3>Password:</h3>
@@ -150,10 +150,10 @@ function login($pdo) {
 	$errors = [];
 
 	if(isset($_POST['login'])) {
-	    $username = $_POST['username'];
+	    $email = $_POST['email'];
 	    $password = $_POST['password'];
 
-	    $user = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $username]);
+	    $user = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $email]);
 	    if(count($user) == 1) {
 	        // User found
 	        $user = $user[0];

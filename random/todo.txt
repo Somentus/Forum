@@ -1,5 +1,7 @@
 - Do login with email rather than username
-- Make LOGIN and REGISTER buttons actually toggle, rather than only open the portal. If login is open and login is clicked, login should close
 
 IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
+
+DONE:
+- Make LOGIN and REGISTER buttons actually toggle, rather than only open the portal. If login is open and login is clicked, login should close

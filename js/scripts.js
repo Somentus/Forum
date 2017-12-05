@@ -21,9 +21,9 @@ function togglePortal(to) {
 					document.getElementById("submit").setAttribute("value", "Login");
 					document.getElementById("navbarLogin").setAttribute("class", "nav-link active");
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link");
-					document.getElementById("email").required = false;
+					document.getElementById("usernameField").required = false;
 					document.getElementById("errors").innerHTML = "";
-					toggle("email", "none");
+					toggle("username", "none");
 				}
 			} else {
 				// Portal is closed, open it
@@ -32,9 +32,8 @@ function togglePortal(to) {
 				document.getElementById("submit").setAttribute("value", "Login");
 				document.getElementById("navbarLogin").setAttribute("class", "nav-link active");
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link");
-				document.getElementById("email").required = false;
 				document.getElementById("errors").innerHTML = "";
-				toggle("email", "none");
+				toggle("username", "none");
 			}
 
 			break;
@@ -55,9 +54,9 @@ function togglePortal(to) {
 					document.getElementById("submit").setAttribute("value", "Register");
 					document.getElementById("navbarLogin").setAttribute("class", "nav-link");
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
-					document.getElementById("email").required = true;
+					document.getElementById("usernameField").required = true;
 					document.getElementById("errors").innerHTML = "";
-					toggle("email", "block"); 
+					toggle("username", "block"); 
 				}
 			} else {
 				// Portal is closed, open it
@@ -66,9 +65,9 @@ function togglePortal(to) {
 				document.getElementById("submit").setAttribute("value", "Register");
 				document.getElementById("navbarLogin").setAttribute("class", "nav-link");
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
-				document.getElementById("email").required = true;
+				document.getElementById("usernameField").required = true;
 				document.getElementById("errors").innerHTML = "";
-				toggle("email", "block"); 
+				toggle("username", "block"); 
 			}
 			break;
 		case 'close':
