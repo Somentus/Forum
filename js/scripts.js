@@ -32,6 +32,7 @@ function togglePortal(to) {
 				document.getElementById("submit").setAttribute("value", "Login");
 				document.getElementById("navbarLogin").setAttribute("class", "nav-link active");
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link");
+				document.getElementById("usernameField").required = false;
 				document.getElementById("errors").innerHTML = "";
 				toggle("username", "none");
 			}
