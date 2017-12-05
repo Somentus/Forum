@@ -29,12 +29,13 @@ if(isset($_POST['create_topic'])) {
 
 <body>
 
-	<div class="container">
-
-		<br />
+	<div>
 		<?php navbar($pdo); ?>
-		<br />
+	</div>
 
+	<br />
+
+	<div class="container">
 		<div id="errors">
 			<?php
 				foreach($errors as $error) {

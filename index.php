@@ -30,9 +30,13 @@ if(isset($_POST['login'])) {
 
 <body>
 
+	<div>
+		<?php navbar($pdo); ?>
+	</div>
+
 	<br />
 	<div class="container">
-		<?php navbar($pdo); portal($errors); body($pdo); ?>
+		<?php portal($errors); body($pdo); ?>
 	</div>
 
 </body>

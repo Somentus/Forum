@@ -34,7 +34,11 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 
 <body>
 
-	<?php navbar($pdo); ?>
+	<div>
+		<?php navbar($pdo); ?>
+	</div>
+
+	<br />
 
 	<div class="container">
 		<div id="errors">
