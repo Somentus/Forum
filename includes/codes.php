@@ -65,7 +65,7 @@ function navbar($pdo) {
 
             ';
 
-    if($_SESSION['is_admin'] == true) {
+    if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
     	echo '
     		<span class="navbar-text">|</span>
     		<li class="nav-item';
