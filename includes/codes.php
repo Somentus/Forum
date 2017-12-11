@@ -289,9 +289,14 @@ function body($pdo) {
 					$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :user_id", ['user_id' => $lastPost['user_id']])[0];
 					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
 					echo "
-									<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
+									<span class='float-right'>	
+										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
+									</span>
 									<br/>
-									".$lastPostUser['username']." - ".$lastPost['created_at'];
+									<span class='float-right'>
+										<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
+									</span>";
+
 				} else {
 					echo "
 									No posts yet.
@@ -307,6 +312,50 @@ function body($pdo) {
 		echo "
 			</div>
 			<br />";
+	}
+}
+
+function parseTimeSinceTimestamp($timestamp) {
+	$timePast = strtotime($timestamp);
+	$date = new DateTime();
+	$date->setTimestamp($timePast);
+	$interval = $date->diff(new DateTime('now'));
+
+	$years = $interval->format('%y');
+	$months = $interval->format('%m');
+	$days = $interval->format('%d');
+	$hours = $interval->format('%h');
+	$minutes = $interval->format('%i');
+	$seconds = $interval->format('%s');
+
+	if($years > 0) {
+		if($years == 1) {
+			return $years." year ago";
+		} else {
+			return $years." years ago";
+		}
+	} else if($months > 0) {
+		if($months == 1) {
+			return $months." month ago";
+		} else {
+			return $months." months ago";
+		}
+	} else if($days > 0) {
+		if($days == 1) {
+			return $days." day ago";
+		} else {
+			return $days." days ago";
+		}
+	} else if($hours > 0){
+		if($hours == 1) {
+			return $hours." hour ago";
+		} else {
+			return $hours." hours ago";
+		}
+	} else if($minutes >= 5) {
+		return $minutes." minutes ago";
+	} else {
+		return "just now";
 	}
 }
 
