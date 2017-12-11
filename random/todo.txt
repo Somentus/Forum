@@ -1,7 +1,9 @@
 TODO:
+- Add user page
 - Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
 - Verify if user has access to current forum
 - Verify if user has access to current topic
+- Add/enable HTTPS (research how it works first xD )
 
 IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
