@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2017 at 09:08 AM
+-- Generation Time: Dec 13, 2017 at 12:18 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -43,7 +43,7 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`, `priority`, `created_at`, `updated_at`) VALUES
 (9, 'Announcements', 1, '2017-11-22 08:48:59', '2017-11-26 00:39:23'),
 (12, 'General', 0, '2017-11-22 09:36:53', '2017-11-22 09:36:53'),
-(13, 'saloon', 2, '2017-11-22 10:27:26', '2017-11-22 11:00:03');
+(13, 'Saloon', 2, '2017-11-22 10:27:26', '2017-11-28 17:26:26');
 
 -- --------------------------------------------------------
 
@@ -66,15 +66,15 @@ CREATE TABLE `forums` (
 --
 
 INSERT INTO `forums` (`id`, `name`, `category_id`, `is_subforum`, `priority`, `created_at`, `updated_at`) VALUES
-(2, 'important', 9, 0, 0, '2017-11-22 10:07:49', '2017-11-22 10:36:49'),
-(11, 'general', 9, 0, 0, '2017-11-22 10:35:55', '2017-11-22 10:35:55'),
-(12, 'monthly events', 9, 0, 0, '2017-11-22 12:35:32', '2017-11-22 12:35:32'),
-(13, 'boardgames', 12, 0, 0, '2017-11-22 12:44:21', '2017-11-22 12:44:21'),
-(14, 'videogames', 12, 0, 0, '2017-11-22 12:44:43', '2017-11-22 12:44:43'),
-(15, 'series', 12, 0, 0, '2017-11-22 12:44:49', '2017-11-22 12:44:49'),
-(16, 'what are you eating today?', 13, 0, 0, '2017-11-22 12:44:57', '2017-11-22 12:44:57'),
-(17, 'random chat', 13, 0, 0, '2017-11-22 12:45:57', '2017-11-22 12:45:57'),
-(18, 'funny gifs', 13, 0, 0, '2017-11-22 12:46:04', '2017-11-22 12:46:04');
+(2, 'Important', 9, 0, 0, '2017-11-22 10:07:49', '2017-11-28 17:26:55'),
+(11, 'General', 9, 0, 0, '2017-11-22 10:35:55', '2017-11-28 17:26:55'),
+(12, 'Monthly events', 9, 0, 0, '2017-11-22 12:35:32', '2017-11-28 17:26:55'),
+(13, 'Boardgames', 12, 0, 0, '2017-11-22 12:44:21', '2017-11-28 17:26:55'),
+(14, 'Videogames', 12, 0, 0, '2017-11-22 12:44:43', '2017-11-28 17:26:55'),
+(15, 'Series', 12, 0, 0, '2017-11-22 12:44:49', '2017-11-28 17:26:55'),
+(16, 'What are you eating today?', 13, 0, 0, '2017-11-22 12:44:57', '2017-11-28 17:26:55'),
+(17, 'Random chat', 13, 0, 0, '2017-11-22 12:45:57', '2017-11-28 17:26:55'),
+(18, 'Funny gifs', 13, 0, 0, '2017-11-22 12:46:04', '2017-11-28 17:26:55');
 
 -- --------------------------------------------------------
 
@@ -96,7 +96,12 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `body`, `user_id`, `topic_id`, `created_at`, `updated_at`) VALUES
-(0, 'Hi! <3', 4, 85, '2017-11-26 00:55:52', '2017-11-26 00:55:52');
+(1, 'Hi! <3', 4, 85, '2017-11-26 00:55:52', '2017-11-26 00:55:52'),
+(2, 'I think it finally worked :D', 2, 86, '2017-12-12 15:21:17', '2017-12-12 15:21:17'),
+(4, 'Woah', 2, 85, '2017-12-12 19:31:48', '2017-12-12 19:31:48'),
+(5, 'This works :O', 2, 85, '2017-12-12 19:32:44', '2017-12-12 19:32:44'),
+(6, 'FOURTH!', 2, 85, '2017-12-12 22:59:45', '2017-12-12 22:59:45'),
+(7, 'And then you\'re going to have to decide whether IC or manpower is more important, because you\'re forced to either be stuck with a permanent -30% recruitable population malus, or be trapped in the Great Depression FOREVER.\r\n\r\nWhich is total fucking bullshit.', 2, 85, '2017-12-12 23:00:05', '2017-12-12 23:00:05');
 
 -- --------------------------------------------------------
 
@@ -127,7 +132,8 @@ INSERT INTO `topics` (`id`, `title`, `forum_id`, `user_id`, `pinned`, `created_a
 (79, 'Hoi', 11, 2, 0, '2017-11-26 00:15:47', '2017-11-26 00:15:47'),
 (80, 'Hoi', 11, 2, 0, '2017-11-26 00:32:33', '2017-11-26 00:32:33'),
 (81, 'Hoi', 11, 2, 0, '2017-11-26 00:32:55', '2017-11-26 00:32:55'),
-(85, 'Weekly Announcements', 2, 4, 0, '2017-11-26 00:55:52', '2017-11-26 00:55:52');
+(85, 'Weekly Announcements', 2, 4, 0, '2017-11-26 00:55:52', '2017-11-26 00:55:52'),
+(86, 'Last post?', 2, 2, 0, '2017-12-12 15:21:17', '2017-12-12 15:21:17');
 
 -- --------------------------------------------------------
 
@@ -176,7 +182,8 @@ ALTER TABLE `forums`
 --
 ALTER TABLE `posts`
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `topic_id` (`topic_id`);
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `topics`
@@ -209,10 +216,16 @@ ALTER TABLE `forums`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `users`
