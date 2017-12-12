@@ -44,7 +44,17 @@ function content($pdo) {
 				if(!empty($lastPost)) {
 						$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $lastPost['user_id']])[0];
 					// echo $lastPostUser['username']." - ".$lastPost['created_at'];
-					echo "<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at']);
+					echo "	<div>
+								<span class='float-right'>
+									<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a>
+								</span>
+							</div>
+							<div>
+								<span class='float-right'>
+									".parseTimeSinceTimestamp($lastPost['created_at'])."
+								</span>
+							</div>";
+
 				} else {
 					echo "No posts yet.";
 				}
