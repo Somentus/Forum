@@ -3,7 +3,7 @@
 session_start();
 
 // Redirect if not admin
-if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && $_SESSION['is_admin'] == true)) {
+if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && isset($_SESSION['is_admin'] && $_SESSION['is_admin'] == true)) {
 	header('Location: /');
 	exit();
 }
