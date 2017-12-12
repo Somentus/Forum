@@ -21,7 +21,7 @@ function togglePortal(to) {
 					document.getElementById("submit").setAttribute("value", "Login");
 					document.getElementById("navbarLogin").setAttribute("class", "nav-link active");
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link");
-					document.getElementById("usernameField").required = false;
+					document.getElementById("usernameField").removeAttribute("required");
 					document.getElementById("errors").innerHTML = "";
 					toggle("username", "none");
 				}
@@ -32,7 +32,7 @@ function togglePortal(to) {
 				document.getElementById("submit").setAttribute("value", "Login");
 				document.getElementById("navbarLogin").setAttribute("class", "nav-link active");
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link");
-				document.getElementById("usernameField").required = false;
+				document.getElementById("usernameField").removeAttribute("required");
 				document.getElementById("errors").innerHTML = "";
 				toggle("username", "none");
 			}
@@ -55,7 +55,7 @@ function togglePortal(to) {
 					document.getElementById("submit").setAttribute("value", "Register");
 					document.getElementById("navbarLogin").setAttribute("class", "nav-link");
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
-					document.getElementById("usernameField").required = true;
+					document.getElementById("usernameField").setAttribute("required", true);
 					document.getElementById("errors").innerHTML = "";
 					toggle("username", "block"); 
 				}
@@ -66,7 +66,7 @@ function togglePortal(to) {
 				document.getElementById("submit").setAttribute("value", "Register");
 				document.getElementById("navbarLogin").setAttribute("class", "nav-link");
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
-				document.getElementById("usernameField").required = true;
+				document.getElementById("usernameField").setAttribute("required", true);
 				document.getElementById("errors").innerHTML = "";
 				toggle("username", "block"); 
 			}
