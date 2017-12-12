@@ -7,6 +7,10 @@ $pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/create_topic.php');
 
+if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']))) {
+	header('Location: /');
+}
+
 $errors = [];
 if(isset($_POST['create_topic'])) {
 	$errors = create_topic($pdo);
@@ -44,7 +48,7 @@ if(isset($_POST['create_topic'])) {
 			?>
 	  	</div>
 
-		<form action="create_topic.php?forum_id=<?php echo $_GET['forum_id']; ?>" method="POST">
+		<form action="create_topic.php?forum_id=<?php echo $_GET['id']; ?>" method="POST">
 			<div class="form-group">
 				<label for="topic_title">Topic Title</label>
 				<input type="text" name="topic_title" class="form-control" id="topic_title" placeholder="Topic Title">
