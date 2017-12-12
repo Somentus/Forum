@@ -12,9 +12,12 @@ function content($pdo) {
 
 		echo '
 		<div class="row">
-			<div class="col-md-12">
-				<a href="create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>
-				<br />
+			<div class="col-md-12">';
+
+		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id'])) {
+			echo '<a href="create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
+		}
+		echo '	<br />
 				<br />';
 
 		$topics = query($pdo, "SELECT * FROM topics WHERE forum_id= :forum_id", ['forum_id' => $id]);
@@ -34,7 +37,8 @@ function content($pdo) {
 						<span class="float-right">';
 				if(!empty($lastPost)) {
 						$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $lastPost['user_id']])[0];
-					echo $lastPostUser['username']." - ".$lastPost['created_at'];
+					// echo $lastPostUser['username']." - ".$lastPost['created_at'];
+					echo "<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at']);
 				} else {
 					echo "No posts yet.";
 				}
