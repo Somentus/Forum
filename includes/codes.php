@@ -271,13 +271,13 @@ function body($pdo) {
 	$categories = query($pdo, "SELECT * FROM categories");
 
 	foreach($categories as $category) {
-		echo "<div class='row'>";
+		echo "<div class='row border border-secondary'>";
 			echo $category['name'];
 			$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 			foreach($forums as $forum) {
 				echo "
 					<div class='col-md-12'>
-						<div class='row' style='border: 1px solid black'>
+						<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 							<div class='col-md-6'>
 								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
 							</div>

@@ -9,7 +9,7 @@ function content($pdo) {
 		$errors[] = "Forum not found!";
 	} else if(count($forum) == 1) {
 		// TODO: Verify if user has access to current forum
-
+		$forum = $forum[0];
 		echo '
 		<div class="row">
 			<div class="col-md-12">';
@@ -24,17 +24,23 @@ function content($pdo) {
 		if(count($topics) == 0) {
 			echo "No topics yet!";
 		} else {
+			echo "
+				<div class='row border border-secondary'>
+					<div class='col-md-12'>
+						".$forum['name']
+			;
+
 			foreach($topics as $topic) {
 				$lastPostId = query($pdo, "SELECT MAX(id) FROM posts WHERE topic_id = :topic_id", ['topic_id' => $topic['id']])[0]['MAX(id)'];
 				$lastPost = query($pdo, "SELECT * FROM posts WHERE id = :id", ['id' => $lastPostId])[0];
-				echo '
-				<div class="row" style="border: 1px solid black">
-					<div class="col-md-6">
-						<a href="../topic.php?id='.$topic['id'].'">'.$topic['title'].'</a>
+				echo "
+				<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
+					<div class='col-md-6'>
+						<a href='../topic.php?id=".$topic['id']."'>".$topic['title']."</a>
 					</div>
 
-					<div class="col-md-6">
-						<span class="float-right">';
+					<div class='col-md-6'>
+						<span class='float-right'>";
 				if(!empty($lastPost)) {
 						$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $lastPost['user_id']])[0];
 					// echo $lastPostUser['username']." - ".$lastPost['created_at'];
@@ -47,6 +53,7 @@ function content($pdo) {
 					</div>
 				</div>';
 			}
+			echo '</div></div>';
 		}
 
 		echo '
