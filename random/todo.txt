@@ -1,4 +1,5 @@
 TODO:
+- Add profile picture, replace placeholders with user's profile pictures
 - Add user page
 - Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
 - Verify if user has access to current forum
