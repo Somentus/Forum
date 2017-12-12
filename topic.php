@@ -32,6 +32,10 @@ require_once('includes/topic.php');
 
 	<div class="container">
 		<?php content($pdo); ?>
+
+		<br />
+
+		<?php post($pdo); ?>
 	</div>
 
 </body>
