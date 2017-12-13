@@ -2,15 +2,16 @@
 
 session_start();
 
-// Redirect if not admin
-if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && $_SESSION['is_admin'] == true)) {
-	header('Location: /');
-	exit();
-}
-
 require_once('../includes/DB.php');
 $pdo = DB();
 require_once('../includes/admin.php');
+require_once('../includes/codes.php');
+
+// Redirect if not admin
+if(!isLoggedIn(true)) {
+	header('Location: /');
+	exit();
+}
 
 $errors = [];
 if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority'])) {
@@ -34,7 +35,11 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 
 <body>
 
-	<?php navbar($pdo); ?>
+	<div>
+		<?php navbar($pdo); ?>
+	</div>
+
+	<br />
 
 	<div class="container">
 		<div id="errors">
@@ -47,7 +52,7 @@ if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority']))
 	  	</div>
 	</div>
 
-	<?php adminForums(); ?>
+	<?php adminForums($pdo); ?>
 
 </body>
 </html>

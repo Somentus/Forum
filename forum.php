@@ -24,14 +24,14 @@ require_once('includes/forum.php');
 
 <body>
 
-	<div class="container">
-
-		<br />
+	<div>
 		<?php navbar($pdo); ?>
-		<br />
-	  	
-		<?php content($pdo); ?>
+	</div>
 
+	<br/>
+
+	<div class="container">
+		<?php content($pdo); ?>
 	</div>
 
 </body>

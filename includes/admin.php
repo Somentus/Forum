@@ -1,22 +1,5 @@
 <?php
 
-function navbar() {
-	echo"
-	<div id='adminLinks' class='container' >
-		<div class='row'> 
-			<div class='col-3'>
-				<a href='./categories.php'>Categories</a>
-				<a href='./forums.php'>Forums</a>
-
-				<form action='../logout.php' method='POST' >
-    				<input type='submit' name='logout' value='Log Out' class='btn btn-light'/>
-				</form>				
-			</div>
-		</div>
-	</div>
-	<br />";
-}
-
 function adminCategories($pdo) {
 	$categories = query($pdo, "SELECT * FROM categories");
 

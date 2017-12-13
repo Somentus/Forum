@@ -10,29 +10,60 @@ function content($pdo) {
 		// TODO: Verify if user has access to current topic
 
 		echo '
-		<div class="row">
-			<div class="col-md-12">
 				<h6>'.$topic['title'].'</h6>';
 
-		$posts = query($pdo, "SELECT * FROM posts WHERE topic_id= :topic_id", ['topic_id' => $id]);
+		$posts = query($pdo, "SELECT * FROM posts WHERE topic_id = :topic_id", ['topic_id' => $id]);
 		if(count($posts) == 0) {
 			echo "No posts yet!";
 		} else {
 			foreach($posts as $post) {
-				echo '
-				<div class="row">
-					<div class="col-md-12">
-						'.$post['body'].'
+				$user = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $post['user_id']])[0];
+				echo "
+					<div class='row border'>
+						<div class='col-md-1'>
+							<a name='".$post['id']."'></a>
+							<div class='pt-1'>
+								<img src='https://via.placeholder.com/75/fd7e14' class='img-fluid rounded'>
+							</div>
+							<div>
+								<a href='user.php?id=".$user['id']."'>".$user['username']."</a>
+							</div>
+						</div>
+						<div class='col-md-11'>
+							<span class='float-right'>
+								<small class='text-muted'>".ucfirst(parseTimeSinceTimestamp($post['created_at']))."</small>
+							</span>
+							".$post['body']."
+						</div>
 					</div>
-				</div>';
+					<br />";
 			}
 		}
+	}
+}
 
+function post($pdo) {
+	if(isLoggedIn()) {
 		echo '
+			<form action="topic.php?topic_id='.$_GET['id'].'" method="POST">
+				<div class="form-group">
+					<textarea name="body" class="form-control" id="body" rows="3"></textarea>
+				</div
+				<div class="text-center">
+					<button type="submit" name="post" class="btn btn-primary">Submit</button>
 				</div>
-			</div>
+			</form>
 		';
 
+		if(isset($_POST['post'])) {
+			$topic_id = $_GET['topic_id'];
+			$body = $_POST['body'];
+			$user_id = $_SESSION['id'];
+
+			// If no errors, register user
+			$query = query($pdo, "INSERT INTO posts (body, user_id, topic_id) VALUES (:body, :user_id, :topic_id)", ['body' => $body, 'user_id' => $user_id, 'topic_id' => $topic_id]);
+			header('location:topic.php?id='.$topic_id);
+		}
 	}
 }
 

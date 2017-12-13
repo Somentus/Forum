@@ -55,7 +55,7 @@ function navbar($pdo) {
 
     echo '
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.php">Navbar</a>
+        <a class="navbar-brand" href="index.php">Forum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -64,26 +64,50 @@ function navbar($pdo) {
             <ul class="navbar-nav mr-auto">
 
             ';
+    if(isLoggedIn(true)) {
+    	echo '
+    		<span class="navbar-text">|</span>
+    		<li class="nav-item';
+			if($currentLocation[0] == "Categories") {
+				echo ' active';
+			}
+    		echo '" >
+    			<a class="nav-link" href="./categories.php">Categories</a>
+			</li>
+			<span class="navbar-text">|</span>
+			<li class="nav-item';
 
-    for($i = 0; $i < $locationSteps; $i++) {
-        echo '
-            <span class="navbar-text">/</span>
-            <li class="nav-item';
-        if($i == $locationSteps - 1) {
-            echo ' active';
-        }
-        echo '"><a class="nav-link" href="'.$currentLocationFiles[$i].'">'.$currentLocation[$i].'
-                </a>
-            </li>
-        ';
+			if($currentLocation[0] == "Forums") {
+				echo ' active';
+			}
+
+			echo '" >
+				<a class="nav-link" href="./forums.php">Forums</a>
+			</li>
+		';
+    } else {
+	    for($i = 0; $i < $locationSteps; $i++) {
+	        echo '
+	            <span class="navbar-text">/</span>
+	            <li class="nav-item';
+	        if($i == $locationSteps - 1) {
+	            echo ' active';
+	        }
+	        echo '"><a class="nav-link" href="'.$currentLocationFiles[$i].'">'.$currentLocation[$i].'
+	                </a>
+	            </li>
+	        ';
+	    } 
     }
+
 
     echo '</ul>';
 
     echo '<ul class="navbar-nav ml-auto">';
 
     // Check if user is logged in
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ) {
+    if(isLoggedIn(true)) {
+    	// Visitor is an admin
         echo '
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
@@ -92,7 +116,18 @@ function navbar($pdo) {
                 <a class="nav-link" href="logout.php">Log Out</a>
             </li>
         ';
+    } else if(isLoggedIn()) {
+    	// Visitor is normal user
+       	echo '
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">Log Out</a>
+            </li>
+        ';
     } else {
+    	// Visitor is not logged in
         echo '
             <li class="nav-item">
                 <a id="navbarLogin" name="login" onclick="togglePortal(\'login\');" class="nav-link" >Login</a>
@@ -123,14 +158,14 @@ function portal($errors) {
   	</div>
 	<div id="portal" class="portal" style="display:none;">
 		<form action="index.php" method="POST">
-			<h3>Username:</h3>
-			<input type="text" name="username" required/>
-			<br />
-
-			<div id="email" style="display:none">
-				<h3>Email:</h3>
-				<input id="email" type="email" name="email" />
+			
+			<div id="username" style="display:none">
+				<h3>Username:</h3>
+				<input id="usernameField" type="text" name="username" />
 			</div>
+
+			<h3>Email:</h3>
+			<input type="email" name="email" required/>
 			<br />
 
 			<h3>Password:</h3>
@@ -150,10 +185,10 @@ function login($pdo) {
 	$errors = [];
 
 	if(isset($_POST['login'])) {
-	    $username = $_POST['username'];
+	    $email = $_POST['email'];
 	    $password = $_POST['password'];
 
-	    $user = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $username]);
+	    $user = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $email]);
 	    if(count($user) == 1) {
 	        // User found
 	        $user = $user[0];
@@ -234,26 +269,42 @@ function register($pdo) {
 }
 
 function body($pdo) {
-	$categories = query($pdo, "SELECT * FROM categories");
+	$categories = query($pdo, "SELECT * FROM categories ORDER BY priority DESC");
 
 	foreach($categories as $category) {
-		echo "<div class='row'>";
+		echo "<div class='row border border-secondary'>";
 			echo $category['name'];
 			$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 			foreach($forums as $forum) {
 				echo "
 					<div class='col-md-12'>
-						<div class='row' style='border: 1px solid black'>
+						<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 							<div class='col-md-6'>
 								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
 							</div>
-							<div class='col-md-6'>
-								<span class='float-right'>
-									<span class='float-right'>
-										LATEST TOPIC
+							<div class='col-md-6'>";
+
+				$lastPost = lastPost($pdo, $forum['id']);
+				echo "<span class='float-right'>";
+				if(!empty($lastPost)) {
+					$lastPostUser = query($pdo, "SELECT * FROM users WHERE id = :user_id", ['user_id' => $lastPost['user_id']])[0];
+					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
+					echo "
+									<span class='float-right'>	
+										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
 									</span>
 									<br/>
-									Somentus - 10 minutes ago
+									<span class='float-right'>
+										<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
+									</span>";
+
+				} else {
+					echo "
+									No posts yet.
+					";
+				}
+
+				echo "
 								</span>
 							</div>
 						</div>
@@ -262,5 +313,78 @@ function body($pdo) {
 		echo "
 			</div>
 			<br />";
+	}
+}
+
+function parseTimeSinceTimestamp($timestamp) {
+	$timePast = strtotime($timestamp);
+	$date = new DateTime();
+	$date->setTimestamp($timePast);
+	$interval = $date->diff(new DateTime('now'));
+
+	$years = $interval->format('%y');
+	$months = $interval->format('%m');
+	$days = $interval->format('%d');
+	$hours = $interval->format('%h');
+	$minutes = $interval->format('%i');
+	$seconds = $interval->format('%s');
+
+	if($years > 0) {
+		if($years == 1) {
+			return $years." year ago";
+		} else {
+			return $years." years ago";
+		}
+	} else if($months > 0) {
+		if($months == 1) {
+			return $months." month ago";
+		} else {
+			return $months." months ago";
+		}
+	} else if($days > 0) {
+		if($days == 1) {
+			return $days." day ago";
+		} else {
+			return $days." days ago";
+		}
+	} else if($hours > 0){
+		if($hours == 1) {
+			return $hours." hour ago";
+		} else {
+			return $hours." hours ago";
+		}
+	} else if($minutes >= 5) {
+		return $minutes." minutes ago";
+	} else {
+		return "just now";
+	}
+}
+
+function lastPost($pdo, $forumId) {
+	$lastPostId = query($pdo, "SELECT MAX(id) FROM posts WHERE topic_id IN (SELECT id FROM topics WHERE forum_id = :forum_id)", ['forum_id' => $forumId])[0]['MAX(id)'];
+	$lastPost = query($pdo, "SELECT * FROM posts WHERE id = :id", ['id' => $lastPostId]);
+	if(!empty($lastPost) ) {
+		return $lastPost[0];	
+	} else {
+		return 0;
+	}
+}
+
+function isLoggedIn($admin = false) {
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id'])) {
+		if($admin == true) {
+			// Verify if visitor is logged in as an admin
+			if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
+				// Visitor is logged in as an admin
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			// Visitor is logged in as a normal user
+			return 1;
+		}
+	} else {
+		return 0;
 	}
 }

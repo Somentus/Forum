@@ -7,6 +7,10 @@ $pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/create_topic.php');
 
+if(!isLoggedIn()) {
+	header('Location: /');
+}
+
 $errors = [];
 if(isset($_POST['create_topic'])) {
 	$errors = create_topic($pdo);
@@ -29,12 +33,13 @@ if(isset($_POST['create_topic'])) {
 
 <body>
 
-	<div class="container">
-
-		<br />
+	<div>
 		<?php navbar($pdo); ?>
-		<br />
+	</div>
 
+	<br />
+
+	<div class="container">
 		<div id="errors">
 			<?php
 				foreach($errors as $error) {
@@ -43,7 +48,7 @@ if(isset($_POST['create_topic'])) {
 			?>
 	  	</div>
 
-		<form action="create_topic.php?forum_id=<?php echo $_GET['forum_id']; ?>" method="POST">
+		<form action="create_topic.php?forum_id=<?php echo $_GET['id']; ?>" method="POST">
 			<div class="form-group">
 				<label for="topic_title">Topic Title</label>
 				<input type="text" name="topic_title" class="form-control" id="topic_title" placeholder="Topic Title">

@@ -30,7 +30,9 @@ if(isset($_POST['login'])) {
 
 <body>
 
-<?php navbar($pdo); ?>
+	<div>
+		<?php navbar($pdo); ?>
+	</div>
 
 	<br />
 	<div class="container">

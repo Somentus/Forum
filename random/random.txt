@@ -1,3 +1,5 @@
+https://heeftmijnwebsitehttpsnodig.nl/
+https://stackoverflow.com/questions/4788644/select-latest-record-in-table-datetime-field
 https://signalvnoise.com/posts/3124-give-it-five-minutes
 https://phpdelusions.net/pdo
 https://www.yourwebskills.com/dbphpmyadminrelationships.php
