@@ -107,7 +107,8 @@ function navbar($pdo) {
     echo '<ul class="navbar-nav ml-auto">';
 
     // Check if user is logged in
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] == false)) {
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
+    	// Visitor is an admin
         echo '
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
@@ -116,8 +117,8 @@ function navbar($pdo) {
                 <a class="nav-link" href="logout.php">Log Out</a>
             </li>
         ';
-    } else if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == false) {
-    	// Placeholder. TODO
+    } else if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] == false)) {
+    	// Visitor is normal user
        	echo '
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
@@ -127,6 +128,7 @@ function navbar($pdo) {
             </li>
         ';
     } else {
+    	// Visitor is not logged in
         echo '
             <li class="nav-item">
                 <a id="navbarLogin" name="login" onclick="togglePortal(\'login\');" class="nav-link" >Login</a>
