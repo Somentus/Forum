@@ -1,5 +1,5 @@
 TODO:
-- Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
+- Rework location display in navbar
 - Order forums by time since last post when displaying
 - Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
 - Direct visitor back to previous page if possible when logging out (?)
@@ -14,6 +14,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
 - Order categories by priority when displaying
 - Do login with email rather than username
 - Make LOGIN and REGISTER buttons actually toggle, rather than only open the portal. If login is open and login is clicked, login should close
