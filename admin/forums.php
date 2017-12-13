@@ -2,16 +2,16 @@
 
 session_start();
 
-// Redirect if not admin
-if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']) && isset($_SESSION['is_admin'] && $_SESSION['is_admin'] == true)) {
-	header('Location: /');
-	exit();
-}
-
 require_once('../includes/DB.php');
 $pdo = DB();
 require_once('../includes/admin.php');
 require_once('../includes/codes.php');
+
+// Redirect if not admin
+if(!isLoggedIn(true)) {
+	header('Location: /');
+	exit();
+}
 
 $errors = [];
 if(isset($_POST['add']) || isset($_POST['delete']) || isset($_POST['priority'])) {

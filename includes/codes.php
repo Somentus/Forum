@@ -64,8 +64,7 @@ function navbar($pdo) {
             <ul class="navbar-nav mr-auto">
 
             ';
-
-    if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
+    if(isLoggedIn(true)) {
     	echo '
     		<span class="navbar-text">|</span>
     		<li class="nav-item';
@@ -107,7 +106,7 @@ function navbar($pdo) {
     echo '<ul class="navbar-nav ml-auto">';
 
     // Check if user is logged in
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
+    if(isLoggedIn(true)) {
     	// Visitor is an admin
         echo '
             <li class="nav-item">
@@ -117,7 +116,7 @@ function navbar($pdo) {
                 <a class="nav-link" href="logout.php">Log Out</a>
             </li>
         ';
-    } else if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] == false)) {
+    } else if(isLoggedIn()) {
     	// Visitor is normal user
        	echo '
             <li class="nav-item">
@@ -372,7 +371,7 @@ function lastPost($pdo, $forumId) {
 }
 
 function isLoggedIn($admin = false) {
-	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id'])) {
 		if($admin == true) {
 			// Verify if visitor is logged in as an admin
 			if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
@@ -388,5 +387,4 @@ function isLoggedIn($admin = false) {
 	} else {
 		return 0;
 	}
-
 }

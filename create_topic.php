@@ -7,7 +7,7 @@ $pdo = DB();
 require_once('includes/codes.php');
 require_once('includes/create_topic.php');
 
-if(!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id']))) {
+if(!isLoggedIn()) {
 	header('Location: /');
 }
 

@@ -14,7 +14,7 @@ function content($pdo) {
 		<div class="row">
 			<div class="col-md-12">';
 
-		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['id'])) {
+		if(isLoggedIn()) {
 			echo '<a href="create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
 		}
 		echo '	<br />
