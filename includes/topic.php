@@ -43,25 +43,27 @@ function content($pdo) {
 }
 
 function post($pdo) {
-	echo '
-		<form action="topic.php?topic_id='.$_GET['id'].'" method="POST">
-			<div class="form-group">
-				<textarea name="body" class="form-control" id="body" rows="3"></textarea>
-			</div
-			<div class="text-center">
-				<button type="submit" name="post" class="btn btn-primary">Submit</button>
-			</div>
-		</form>
-	';
+	if(isLoggedIn()) {
+		echo '
+			<form action="topic.php?topic_id='.$_GET['id'].'" method="POST">
+				<div class="form-group">
+					<textarea name="body" class="form-control" id="body" rows="3"></textarea>
+				</div
+				<div class="text-center">
+					<button type="submit" name="post" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		';
 
-	if(isset($_POST['post'])) {
-		$topic_id = $_GET['topic_id'];
-		$body = $_POST['body'];
-		$user_id = $_SESSION['id'];
+		if(isset($_POST['post'])) {
+			$topic_id = $_GET['topic_id'];
+			$body = $_POST['body'];
+			$user_id = $_SESSION['id'];
 
-		// If no errors, register user
-		$query = query($pdo, "INSERT INTO posts (body, user_id, topic_id) VALUES (:body, :user_id, :topic_id)", ['body' => $body, 'user_id' => $user_id, 'topic_id' => $topic_id]);
-		header('location:topic.php?id='.$topic_id);
+			// If no errors, register user
+			$query = query($pdo, "INSERT INTO posts (body, user_id, topic_id) VALUES (:body, :user_id, :topic_id)", ['body' => $body, 'user_id' => $user_id, 'topic_id' => $topic_id]);
+			header('location:topic.php?id='.$topic_id);
+		}
 	}
 }
 

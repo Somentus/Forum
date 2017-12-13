@@ -370,3 +370,23 @@ function lastPost($pdo, $forumId) {
 		return 0;
 	}
 }
+
+function isLoggedIn($admin = false) {
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+		if($admin == true) {
+			// Verify if visitor is logged in as an admin
+			if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
+				// Visitor is logged in as an admin
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			// Visitor is logged in as a normal user
+			return 1;
+		}
+	} else {
+		return 0;
+	}
+
+}
