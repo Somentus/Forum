@@ -268,7 +268,7 @@ function register($pdo) {
 }
 
 function body($pdo) {
-	$categories = query($pdo, "SELECT * FROM categories");
+	$categories = query($pdo, "SELECT * FROM categories ORDER BY priority DESC");
 
 	foreach($categories as $category) {
 		echo "<div class='row border border-secondary'>";
