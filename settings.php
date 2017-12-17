@@ -5,7 +5,7 @@ session_start();
 require_once('includes/DB.php');
 $pdo = DB();
 require_once('includes/codes.php');
-require_once('includes/user.php');
+require_once('includes/settings.php');
 
 $securityErrors = [];
 if(isset($_POST['securitySubmit'])) {
@@ -75,7 +75,7 @@ if(isset($_POST['securitySubmit'])) {
 					
 					<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-						<form action="user.php" method="POST">
+						<form action="settings.php" method="POST">
 							<div class="form-group row">
 								<label for="inputEmail" class="col-md-2 col-form-label">Email</label>
 								<div class="input-group col-md-4">

@@ -5,6 +5,7 @@ BUGS:
 - Portal doesn't show up outside index.php
 
 SMALL:
+- Fix user links (once user pages have been implemented)
 - Add titles to pages
 - Direct visitor back to previous page if possible when logging out (?)
 - Reset password
