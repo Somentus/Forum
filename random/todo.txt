@@ -1,4 +1,7 @@
 TODO:
+- Routes (clean URL)
+- Portal doesn't show up outside index.php
+- Add titles to pages
 - Rework location display in navbar
 - Order forums by time since last post when displaying
 - Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
@@ -7,6 +10,7 @@ TODO:
 - Add profile picture, replace placeholders with user's profile pictures
 
 IDEA:
+- Hover over time since to show exact date/time
 - Verify if user has access to current forum
 - Verify if user has access to current topic
 - Take a look at session_regenerate_id (https://secure.php.net/manual/en/function.session-regenerate-id.php)
@@ -14,6 +18,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Sanitise HTML output (htmlspecialchars)
 - Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
 - Order categories by priority when displaying
 - Do login with email rather than username

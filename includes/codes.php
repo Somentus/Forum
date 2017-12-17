@@ -273,14 +273,14 @@ function body($pdo) {
 
 	foreach($categories as $category) {
 		echo "<div class='row border border-secondary'>";
-			echo $category['name'];
+			echo htmlspecialchars($category['name']);
 			$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 			foreach($forums as $forum) {
 				echo "
 					<div class='col-md-12'>
 						<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 							<div class='col-md-6'>
-								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
+								<a href='forum.php?id=".$forum['id']."''>".htmlspecialchars($forum['name'])."</a>
 							</div>
 							<div class='col-md-6'>";
 
@@ -291,11 +291,11 @@ function body($pdo) {
 					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
 					echo "
 									<span class='float-right'>	
-										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
+										<a href='topic.php?id=".$lastPostTopic['id']."'>".htmlspecialchars($lastPostTopic['title'])."</a>
 									</span>
 									<br/>
 									<span class='float-right'>
-										<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
+										<a href='user.php?id=".$lastPostUser['id']."'>".htmlspecialchars($lastPostUser['username'])."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
 									</span>";
 
 				} else {

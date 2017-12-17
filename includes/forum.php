@@ -27,7 +27,7 @@ function content($pdo) {
 			echo "
 				<div class='row border border-secondary'>
 					<div class='col-md-12'>
-						".$forum['name']
+						".htmlspecialchars($forum['name'])
 			;
 
 			foreach($topics as $topic) {
@@ -36,7 +36,7 @@ function content($pdo) {
 				echo "
 				<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 					<div class='col-md-6'>
-						<a href='../topic.php?id=".$topic['id']."'>".$topic['title']."</a>
+						<a href='../topic.php?id=".$topic['id']."'>".htmlspecialchars($topic['title'])."</a>
 					</div>
 
 					<div class='col-md-6'>
@@ -46,7 +46,7 @@ function content($pdo) {
 					// echo $lastPostUser['username']." - ".$lastPost['created_at'];
 					echo "	<div>
 								<span class='float-right'>
-									<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a>
+									<a href='user.php?id=".$lastPostUser['id']."'>".htmlspecialchars($lastPostUser['username'])."</a>
 								</span>
 							</div>
 							<div>

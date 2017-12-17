@@ -48,7 +48,7 @@ if(isset($_POST['create_topic'])) {
 			?>
 	  	</div>
 
-		<form action="create_topic.php?forum_id=<?php echo $_GET['id']; ?>" method="POST">
+		<form action="create_topic.php?forum_id=<?php echo htmlspecialchars($_GET['id']); ?>" method="POST">
 			<div class="form-group">
 				<label for="topic_title">Topic Title</label>
 				<input type="text" name="topic_title" class="form-control" id="topic_title" placeholder="Topic Title">
