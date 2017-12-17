@@ -13,3 +13,4 @@ https://stackoverflow.com/questions/1545357/how-to-check-if-a-user-is-logged-in-
 https://secure.php.net/manual/en/function.password-verify.php
 https://secure.php.net/manual/en/faq.passwords.php
 http://shoelace.io/
+https://andwecode.com/create-popup-login-and-signup-form/#live

@@ -110,7 +110,7 @@ function navbar($pdo) {
     	// Visitor is an admin
         echo '
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="user.php">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Log Out</a>
@@ -120,7 +120,7 @@ function navbar($pdo) {
     	// Visitor is normal user
        	echo '
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="user.php">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Log Out</a>

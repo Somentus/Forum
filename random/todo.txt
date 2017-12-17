@@ -1,13 +1,24 @@
-TODO:
-- Routes (clean URL)
-- Portal doesn't show up outside index.php
-- Add titles to pages
-- Rework location display in navbar
-- Order forums by time since last post when displaying
-- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
-- Direct visitor back to previous page if possible when logging out (?)
+IN PROGRESS:
 - Add user page
+
+BUGS:
+- Portal doesn't show up outside index.php
+
+SMALL:
+- Add titles to pages
+- Direct visitor back to previous page if possible when logging out (?)
+- Reset password
+
+MEDIUM:
+- Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
+- Rework location display in navbar
 - Add profile picture, replace placeholders with user's profile pictures
+- Order forums by time since last post when displaying
+
+BIG:
+- Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)
+- Routes (clean URL)
+- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
 
 IDEA:
 - Hover over time since to show exact date/time
