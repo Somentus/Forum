@@ -81,6 +81,12 @@ if(isset($_POST['securitySubmit'])) {
 
 						<form action="settings.php" method="POST">
 							<div class="form-group row">
+								<label for="inputUsername" class="col-md-2 col-form-label">New Username:</label>
+								<div class="input-group col-md-4">
+									<input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username">
+									<div class="input-group-addon">U</div>
+								</div>
+
 								<label for="inputEmail" class="col-md-2 col-form-label">New Email:</label>
 								<div class="input-group col-md-4">
 									<input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">

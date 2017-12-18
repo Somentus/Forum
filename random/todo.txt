@@ -1,13 +1,11 @@
 IN PROGRESS:
 
-
 BUGS:
 - Portal doesn't show up outside index.php
 - Fix/remove glyphicons from Admin tables
 - Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab.
 
 SMALL:
-- Implement "change username" to Settings
 - Fix user links (once user pages have been implemented)
 - Add titles to pages
 - Direct visitor back to previous page if possible when logging out (?)
@@ -15,6 +13,7 @@ SMALL:
 - Make datepicker prettier (Settings->Profile->Birthdate)
 
 MEDIUM:
+- Make settings show the users' own information (username, email address, birthdate etc)
 - Add user page (public profile)
 - Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
 - Rework location display in navbar
@@ -34,6 +33,8 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- MySQL error when deleting non-empty forum
+- Implement "change username" to Settings
 - Add backend to Settings->Profile
 - Images table only works for 1 on 1. Type & foreign_id is not a unique identifier anymore as soon as there's a post (or entity in general) with multiple images
 - Add profile picture, replace placeholders with user's profile pictures (https://stackoverflow.com/questions/8922056/what-is-the-best-way-to-upload-and-store-pictures-on-the-site)

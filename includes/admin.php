@@ -237,8 +237,15 @@ function forums($pdo) {
 		$forum = $query[0];
 		$name = $forum['name'];
 
-		$query = query($pdo, "DELETE FROM forums WHERE id= :id limit 1", ['id' => $id]);
-		$errors[] = "Deleted '$name' from forums.";
+		$query = query($pdo, "SELECT * FROM topics WHERE forum_id = :forum_id", ['forum_id' => $id]);
+		if( count($query) > 0) {
+			$errors[] = "Forum still contains topics. Delete the topics before deleting the forum.";
+		}
+
+		if(empty($errors)) {
+			$query = query($pdo, "DELETE FROM forums WHERE id= :id limit 1", ['id' => $id]);
+			$errors[] = "Deleted '$name' from forums.";
+		}
 	} else if (isset($_POST['priority'])) {
 		$errors = [];
 

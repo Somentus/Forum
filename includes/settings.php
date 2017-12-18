@@ -4,6 +4,25 @@ function security($pdo) {
 	$errors = [];
 
 	if(isset($_POST['securitySubmit'])) {
+		if(!empty($_POST['username'])) {
+			$username = $_POST['username'];
+
+			// Check if username already exists
+			$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username = :username", ['username' => $username]);
+			if(count($usernameAlreadyExists) >= 1) {
+				$errors[] = "Username already exists.";
+			} else {
+				$newUsername = $username;
+				$user = query($pdo, "SELECT * FROM users WHERE id = :id LIMIT 1", ['id' => $_SESSION['id']])[0];
+				$oldUsername = $user['username'];
+
+				if($oldUsername != $newUsername) {
+					query($pdo, "UPDATE users SET username = :username WHERE id= :id", ['id' => $_SESSION['id'], 'username' => $newUsername]);
+				}
+				$errors[] = "Username succesfully changed to $newUsername.";
+			}
+		}
+
 		if(!empty($_POST['email'])) {
 			$unVerifiedEmail = $_POST['email'];
 
@@ -11,7 +30,7 @@ function security($pdo) {
 			if(!filter_var($unVerifiedEmail, FILTER_VALIDATE_EMAIL)) {
 				$errors[] = "Please enter a valid email address." ;
 			} else {
-				$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $unVerifiedEmail]);
+				$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email = :email", ['email' => $unVerifiedEmail]);
 				if(count($emailAlreadyExists) >= 1) {
 					$errors[] = "Email address already exists." ;
 				} else {
@@ -20,11 +39,9 @@ function security($pdo) {
 					$oldEmail = $user['email'];
 
 					if($oldEmail != $newEmail) {
-						query($pdo, "UPDATE users SET email = :email WHERE id= :id", ['id' => $_SESSION['id'], 'email' => $newEmail]);
-						$errors[] = "Emailaddress succesfully changed to $newEmail.";
-					} else {
-						$errors[] = "Emailaddress succesfully changed to $newEmail.";
+						query($pdo, "UPDATE users SET email = :email WHERE id = :id", ['id' => $_SESSION['id'], 'email' => $newEmail]);
 					}
+					$errors[] = "Emailaddress succesfully changed to $newEmail.";
 				}
 			}
 		}
@@ -39,7 +56,7 @@ function security($pdo) {
 				// TODO Check if password is strong enough
 				$password = password_hash($unVerifiedPassword, PASSWORD_DEFAULT);
 
-				query($pdo, "UPDATE users SET password = :password WHERE id= :id", ['id' => $_SESSION['id'], 'password' => $password]);
+				query($pdo, "UPDATE users SET password = :password WHERE id = :id", ['id' => $_SESSION['id'], 'password' => $password]);
 				$errors[] = "Password succesfully changed.";
 			}
 		}
@@ -73,7 +90,7 @@ function profile($pdo) {
 		}
 
 		if(isset($_POST['birthdate']) && !empty($_POST['birthdate'])) {
-			query($pdo, "UPDATE users SET birth_date = :birth_date WHERE id= :id", ['id' => $_SESSION['id'], 'birth_date' => $_POST['birthdate']]);
+			query($pdo, "UPDATE users SET birth_date = :birth_date WHERE id = :id", ['id' => $_SESSION['id'], 'birth_date' => $_POST['birthdate']]);
 			$errors[] = "Birthdate succesfully changed.";
 		}
 	}
