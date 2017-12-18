@@ -2,14 +2,17 @@
 
 session_start();
 
-require_once('includes/DB.php');
+require_once($_SERVER["DOCUMENT_ROOT"].'/includes/DB.php');
 $pdo = DB();
-require_once('includes/codes.php');
-require_once('includes/settings.php');
+require_once($_SERVER["DOCUMENT_ROOT"].'/includes/codes.php');
+require_once($_SERVER["DOCUMENT_ROOT"].'/includes/settings.php');
 
 $securityErrors = [];
+$profileErrors = [];
 if(isset($_POST['securitySubmit'])) {
 	$securityErrors = security($pdo);
+} else if(isset($_POST['profileSubmit'])) {
+	$profileErrors = profile($pdo);
 }
 
 ?>
@@ -22,13 +25,13 @@ if(isset($_POST['securitySubmit'])) {
 
 	<title>Functional Forum</title>
 
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-	<script src="js/scripts.js" type="text/javascript" ></script>
+	<script src="/js/scripts.js" type="text/javascript" ></script>
 
 </head>
 
@@ -65,15 +68,16 @@ if(isset($_POST['securitySubmit'])) {
 
 				<div class="tab-content ml-5 p-3 border" id="v-pills-tabContent">
 
-					<div id="errors">
-						<?php
-							foreach($securityErrors as $error) {
-								echo $error."<br />";
-							}
-						?>
-					</div>
 					
 					<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+						<div id="errors">
+							<?php
+								foreach($securityErrors as $error) {
+									echo $error."<br />";
+								}
+							?>
+						</div>
 
 						<form action="settings.php" method="POST">
 							<div class="form-group row">
@@ -100,9 +104,32 @@ if(isset($_POST['securitySubmit'])) {
 						</form>
 
 					</div>
+					
 					<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-						Profile
+
+						<?php
+							foreach($profileErrors as $error) {
+								echo $error."<br />";
+							}
+						?>
+
+						<form action="settings.php" method="POST" enctype="multipart/form-data">
+							<div class="form-group row">
+								<label for="inputPicture" class="col-md-2 col-form-label">Profile Picture</label>
+								<div class="input-group col-md-4">
+									<input type="file" class="form-control" id="inputPicture" name="image" />
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-10">
+									<button name="profileSubmit" type="submit" class="btn btn-primary">Save</button>
+								</div>
+							</div>
+						</form>
+
 					</div>
+
 				</div>
 
 			</div>

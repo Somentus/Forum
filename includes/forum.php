@@ -15,7 +15,7 @@ function content($pdo) {
 			<div class="col-md-12">';
 
 		if(isLoggedIn()) {
-			echo '<a href="create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
+			echo '<a href="/create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
 		}
 		echo '	<br />
 				<br />';

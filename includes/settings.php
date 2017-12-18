@@ -48,4 +48,21 @@ function security($pdo) {
 	return $errors;
 }
 
+function profile($pdo) {
+	$errors = [];
+
+	if(isset($_POST['profileSubmit'])) {
+		if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+			$replaced = processImage($pdo, $_FILES, 'user_id', $_SESSION['id']);
+			if($replaced) {
+				$errors[] = "Old profile picture succesfully replaced!";
+			} else {
+				$errors[] = "New profile picture succesfully uploaded!";
+			}
+		}
+	}
+
+	return $errors;
+}
+
 ?>

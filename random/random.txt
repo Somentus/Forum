@@ -1,3 +1,8 @@
+UUID / Store images:
+https://rogerstringer.com/2013/11/14/generate-uuids-php/
+https://secure.php.net/manual/en/function.getcwd.php
+https://secure.php.net/manual/en/function.is-dir.php
+
 https://heeftmijnwebsitehttpsnodig.nl/
 https://stackoverflow.com/questions/4788644/select-latest-record-in-table-datetime-field
 https://signalvnoise.com/posts/3124-give-it-five-minutes

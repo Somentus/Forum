@@ -55,7 +55,7 @@ function navbar($pdo) {
 
     echo '
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.php">Forum</a>
+        <a class="navbar-brand" href="/index.php">Forum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -72,7 +72,7 @@ function navbar($pdo) {
 				echo ' active';
 			}
     		echo '" >
-    			<a class="nav-link" href="./categories.php">Categories</a>
+    			<a class="nav-link" href="/admin/categories.php">Categories</a>
 			</li>
 			<span class="navbar-text">|</span>
 			<li class="nav-item';
@@ -82,7 +82,7 @@ function navbar($pdo) {
 			}
 
 			echo '" >
-				<a class="nav-link" href="./forums.php">Forums</a>
+				<a class="nav-link" href="/admin/forums.php">Forums</a>
 			</li>
 		';
     } else {
@@ -110,20 +110,20 @@ function navbar($pdo) {
     	// Visitor is an admin
         echo '
             <li class="nav-item">
-                <a class="nav-link" href="settings.php">Settings</a>
+                <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php">Log Out</a>
             </li>
         ';
     } else if(isLoggedIn()) {
     	// Visitor is normal user
        	echo '
             <li class="nav-item">
-                <a class="nav-link" href="settings.php">Settings</a>
+                <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php">Log Out</a>
             </li>
         ';
     } else {
@@ -387,4 +387,60 @@ function isLoggedIn($admin = false) {
 	} else {
 		return 0;
 	}
+}
+
+function generate_uuid() {
+	return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+		mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+		mt_rand( 0, 0xffff ),
+		mt_rand( 0, 0x0fff ) | 0x4000,
+		mt_rand( 0, 0x3fff ) | 0x8000,
+		mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+	);
+}
+
+function processImage($pdo, $files, $type, $foreign_id) {
+	$replaced = 0;
+
+	if($files['image']['name']) {
+		$uuid = generate_uuid();
+
+
+
+		// Verify if UUID already exists
+		$uuidAlreadyExists = query($pdo, "SELECT * FROM images WHERE uuid = :uuid", ['uuid' => $uuid]);
+		while(count($uuidAlreadyExists) != 0) {
+			$uuid = generate_uuid();
+			$uuidAlreadyExists = query($pdo, "SELECT * FROM images WHERE uuid = :uuid", ['uuid' => $uuid]);
+		}
+
+		$save_path = getcwd()."/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/";
+		$file_name = substr($uuid, 2);
+		$file_extension = pathinfo($files['image']['name'], PATHINFO_EXTENSION);
+
+		// If type == user_id, check if user already has a picture
+		if($type == "user_id") {
+			$verify = query($pdo, "SELECT * FROM images WHERE type = 'user_id' AND foreign_id = :foreign_id", ['foreign_id' => $foreign_id]);
+			if(count($verify)) {
+				// User already has a profile picture
+				$picture = $verify[0];
+				$picture_old_save_path = getcwd()."/img/".substr($picture['uuid'], 0, 1)."/".substr($picture['uuid'], 1, 1)."/".substr($picture['uuid'], 2).".".$file_extension;
+				unlink($picture_old_save_path);
+				$replaced = 1;
+			}
+		}
+
+		if(!is_dir($save_path)) {
+			mkdir($save_path, 0777, true);
+		}
+		move_uploaded_file($files['image']['tmp_name'], $save_path.$file_name.".".$file_extension);
+		
+		if($replaced) {
+			$query = query($pdo, "UPDATE images SET uuid = :uuid WHERE foreign_id= :foreign_id AND type = 'user_id'", ['uuid' => $uuid, 'foreign_id' => $foreign_id]);
+		} else {
+			query($pdo, "INSERT INTO images (uuid, extension, type, foreign_id) VALUES (:uuid, :extension, :type, :foreign_id)", ['uuid' => $uuid, 'extension' => $file_extension, 'type' => $type, 'foreign_id' => $foreign_id]);
+		}
+	}
+
+	return $replaced;
 }

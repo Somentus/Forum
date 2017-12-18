@@ -1,7 +1,9 @@
 IN PROGRESS:
 - Add user page
+- Add profile picture, replace placeholders with user's profile pictures (https://stackoverflow.com/questions/8922056/what-is-the-best-way-to-upload-and-store-pictures-on-the-site)
 
 BUGS:
+- Fix/remove glyphicons from Admin tables
 - Portal doesn't show up outside index.php
 
 SMALL:
@@ -13,15 +15,14 @@ SMALL:
 MEDIUM:
 - Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
 - Rework location display in navbar
-- Add profile picture, replace placeholders with user's profile pictures
 - Order forums by time since last post when displaying
 
 BIG:
 - Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)
 - Routes (clean URL)
-- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
 
 IDEA:
+- Night mode
 - Hover over time since to show exact date/time
 - Verify if user has access to current forum
 - Verify if user has access to current topic
@@ -30,6 +31,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php (fixed it by adding / to hrefs etc, apparently that refers to root). require_once however needed $_SERVER['DOCUMENT_ROOT'] (http://yagudaev.com/posts/resolving-php-relative-path-problem/).
 - Sanitise HTML output (htmlspecialchars)
 - Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
 - Order categories by priority when displaying
