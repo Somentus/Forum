@@ -399,35 +399,31 @@ function generate_uuid() {
 	);
 }
 
-function processImage($pdo, $files, $type, $foreign_id) {
+function processImage($pdo, $files, $user_id) {
 	$replaced = 0;
 
 	if($files['image']['name']) {
 		$uuid = generate_uuid();
 
-
-
 		// Verify if UUID already exists
-		$uuidAlreadyExists = query($pdo, "SELECT * FROM images WHERE uuid = :uuid", ['uuid' => $uuid]);
+		$uuidAlreadyExists = query($pdo, "SELECT * FROM profile_pictures WHERE uuid = :uuid", ['uuid' => $uuid]);
 		while(count($uuidAlreadyExists) != 0) {
 			$uuid = generate_uuid();
-			$uuidAlreadyExists = query($pdo, "SELECT * FROM images WHERE uuid = :uuid", ['uuid' => $uuid]);
+			$uuidAlreadyExists = query($pdo, "SELECT * FROM profile_pictures WHERE uuid = :uuid", ['uuid' => $uuid]);
 		}
 
 		$save_path = getcwd()."/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/";
 		$file_name = substr($uuid, 2);
 		$file_extension = pathinfo($files['image']['name'], PATHINFO_EXTENSION);
 
-		// If type == user_id, check if user already has a picture
-		if($type == "user_id") {
-			$verify = query($pdo, "SELECT * FROM images WHERE type = 'user_id' AND foreign_id = :foreign_id", ['foreign_id' => $foreign_id]);
-			if(count($verify)) {
-				// User already has a profile picture
-				$picture = $verify[0];
-				$picture_old_save_path = getcwd()."/img/".substr($picture['uuid'], 0, 1)."/".substr($picture['uuid'], 1, 1)."/".substr($picture['uuid'], 2).".".$file_extension;
-				unlink($picture_old_save_path);
-				$replaced = 1;
-			}
+		// Check if user already has a picture
+		$verify = query($pdo, "SELECT * FROM profile_pictures WHERE user_id = :user_id", ['user_id' => $user_id]);
+		if(count($verify)) {
+			// User already has a profile picture
+			$picture = $verify[0];
+			$picture_old_save_path = getcwd()."/img/".substr($picture['uuid'], 0, 1)."/".substr($picture['uuid'], 1, 1)."/".substr($picture['uuid'], 2).".".$file_extension;
+			unlink($picture_old_save_path);
+			$replaced = 1;
 		}
 
 		if(!is_dir($save_path)) {
@@ -436,9 +432,9 @@ function processImage($pdo, $files, $type, $foreign_id) {
 		move_uploaded_file($files['image']['tmp_name'], $save_path.$file_name.".".$file_extension);
 		
 		if($replaced) {
-			$query = query($pdo, "UPDATE images SET uuid = :uuid WHERE foreign_id = :foreign_id AND type = 'user_id'", ['uuid' => $uuid, 'foreign_id' => $foreign_id]);
+			$query = query($pdo, "UPDATE profile_pictures SET uuid = :uuid WHERE user_id = :user_id", ['uuid' => $uuid, 'user_id' => $user_id]);
 		} else {
-			query($pdo, "INSERT INTO images (uuid, extension, type, foreign_id) VALUES (:uuid, :extension, :type, :foreign_id)", ['uuid' => $uuid, 'extension' => $file_extension, 'type' => $type, 'foreign_id' => $foreign_id]);
+			query($pdo, "INSERT INTO profile_pictures (uuid, extension, user_id) VALUES (:uuid, :extension, :user_id)", ['uuid' => $uuid, 'extension' => $file_extension, 'user_id' => $user_id]);
 		}
 	}
 
@@ -446,7 +442,7 @@ function processImage($pdo, $files, $type, $foreign_id) {
 }
 
 function retrieveProfilePicture($pdo, $user_id) {
-	$image = query($pdo, "SELECT * FROM images WHERE foreign_id = :foreign_id AND type = 'user_id'", ['foreign_id' => $user_id]);
+	$image = query($pdo, "SELECT * FROM profile_pictures WHERE user_id = :user_id", ['user_id' => $user_id]);
 	if(count($image) == 1) {
 		$image = $image[0];
 		$uuid = $image['uuid'];

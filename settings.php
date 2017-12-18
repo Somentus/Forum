@@ -81,20 +81,24 @@ if(isset($_POST['securitySubmit'])) {
 
 						<form action="settings.php" method="POST">
 							<div class="form-group row">
-								<label for="inputEmail" class="col-md-2 col-form-label">Email</label>
+								<label for="inputEmail" class="col-md-2 col-form-label">New Email:</label>
 								<div class="input-group col-md-4">
 									<input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
 									<div class="input-group-addon">@</div>
 								</div>
 							</div>
 
+							<hr />
+
 							<div class="form-group row">
-								<label for="inputPassword" class="col-md-2 col-form-label">Password</label>
+								<label for="inputPassword" class="col-md-2 col-form-label">New Password:</label>
 								<div class="input-group col-md-4">
 									<input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
 									<div class="input-group-addon">$</div>
 								</div>
 							</div>
+
+							<hr>
 
 							<div class="form-group row">
 								<div class="col-md-10">

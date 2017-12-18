@@ -53,12 +53,14 @@ function profile($pdo) {
 
 	if(isset($_POST['profileSubmit'])) {
 		if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-			$replaced = processImage($pdo, $_FILES, 'user_id', $_SESSION['id']);
+			$replaced = processImage($pdo, $_FILES, $_SESSION['id']);
 			if($replaced) {
 				$errors[] = "Old profile picture succesfully replaced!";
 			} else {
 				$errors[] = "New profile picture succesfully uploaded!";
 			}
+		} else if($_FILES['image']['error'] == 1) {
+			$errors[] = "File size is too big, please upload files smaller than 2MB!";
 		}
 	}
 
