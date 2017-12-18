@@ -4,9 +4,9 @@ SMALL:
 - Fix user links (once user pages have been implemented)
 - Add titles to pages
 - Reset password (when not logged in)
-- Make datepicker prettier (Settings->Profile->Birthdate)
 
 MEDIUM:
+- Make datepicker prettier (Settings->Profile->Birthdate)
 - Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab. [BUG]
 - Fix/remove glyphicons from Admin tables [BUG]
 - Portal doesn't show up outside index.php [BUG]
@@ -14,7 +14,7 @@ MEDIUM:
 - Add user page (public profile)
 - Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
 - Rework location display in navbar
-- Order forums by time since last post when displaying
+- Order topics by time since last post when displaying
 
 BIG:
 - Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)
