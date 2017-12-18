@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2017 at 08:49 PM
+-- Generation Time: Dec 18, 2017 at 09:30 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -69,11 +69,9 @@ INSERT INTO `forums` (`id`, `name`, `category_id`, `is_subforum`, `priority`, `c
 (2, 'Important', 9, 0, 0, '2017-11-22 10:07:49', '2017-11-28 17:26:55'),
 (11, 'General', 9, 0, 0, '2017-11-22 10:35:55', '2017-11-28 17:26:55'),
 (12, 'Monthly events', 9, 0, 0, '2017-11-22 12:35:32', '2017-11-28 17:26:55'),
-(13, 'Boardgames', 12, 0, 0, '2017-11-22 12:44:21', '2017-11-28 17:26:55'),
 (14, 'Videogames', 12, 0, 0, '2017-11-22 12:44:43', '2017-11-28 17:26:55'),
 (15, 'Series', 12, 0, 0, '2017-11-22 12:44:49', '2017-11-28 17:26:55'),
 (16, 'What are you eating today?', 13, 0, 0, '2017-11-22 12:44:57', '2017-11-28 17:26:55'),
-(17, 'Random chat', 13, 0, 0, '2017-11-22 12:45:57', '2017-11-28 17:26:55'),
 (18, 'Funny gifs', 13, 0, 0, '2017-11-22 12:46:04', '2017-11-28 17:26:55');
 
 -- --------------------------------------------------------
@@ -179,7 +177,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `birth_date`, `bio`, `is_admin`, `created_at`, `updated_at`) VALUES
-(2, 'Somentus', 'somentus@gmail.com', '$2y$10$4Fv9lJMf8RCR2JCO9QptG.rg37NPbSTM9PKHNA36v/LrobmzMAR9W', '1994-12-05', 'HOI ik ben MAAIKE!', 1, '2017-11-21 23:00:00', '2017-12-18 19:46:57'),
+(2, 'Somentus', 'somentus@gmail.com', '$2y$10$4Fv9lJMf8RCR2JCO9QptG.rg37NPbSTM9PKHNA36v/LrobmzMAR9W', '1994-12-05', 'HOI ik ben MAAIKE!', 1, '2017-11-21 23:00:00', '2017-12-18 20:01:36'),
 (3, 'Admin', 'admin@admin.nl', '$2y$10$vhj/B4h6ccwfFXAZZq96h.TKnX6LneGGs4m5BivlZFjh75fOTXoZq', '0000-00-00', '', 0, '2017-11-22 23:00:00', '2017-11-22 23:00:00'),
 (4, 'Test', 'test@test.test', '$2y$10$Tg1asW4hqzKpvmsy4ql7xOlnabYKKkz9aroN/vjbCIWt5dNLpl3y2', '0000-00-00', '', 0, '2017-11-25 23:00:00', '2017-11-25 23:00:00'),
 (5, 'hoiikbengiel', 'hoiikbengiel@mailinator.com', '$2y$10$4sv9Kq9mqOBB7XwdM1TGJ.1DryC3LiBzLQVrJWOuShRfeafhk5R7C', '0000-00-00', '', 0, '2017-12-14 23:00:00', '2017-12-14 23:00:00'),
