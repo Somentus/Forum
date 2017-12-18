@@ -117,23 +117,53 @@ if(isset($_POST['securitySubmit'])) {
 							}
 						?>
 
-						<form action="settings.php" method="POST" enctype="multipart/form-data">
-							<div class="form-group row">
-								<label for="inputPicture" class="col-md-2 col-form-label">
-									Profile Picture
-								</label>
-								<div class="input-group col-md-4">
-									<input type="file" class="form-control" id="inputPicture" name="image" />
+						<form action="settings.php" method="POST" enctype="multipart/form-data" class="row">
+
+							<div class="col-md-6">
+
+								<div class="form-group row">
+									<label for="inputProfilePicture" class="col-md-4 col-form-label">
+										Profile Picture
+									</label>
+									<div class="input-group col-md-8">
+										<input type="file" class="form-control" id="inputProfilePicture" name="image" />
+									</div>
 								</div>
-								<div class="col-md-6">
-									<img src='<?php echo retrieveProfilePicture($pdo, $_SESSION['id']); ?>' class='img-fluid rounded'>
+
+								<hr>
+
+								<div class="form-group row">
+									<label for="inputBirthdate" class="col-md-4 col-form-label">
+										Birthdate
+									</label>
+									<div class="input-group col-md-8">
+										<input class="form-control" id="inputBirthdate" type="date">
+									</div>
 								</div>
+
+								<hr>
+
+								<div class="form-group row">
+									<label for="inputBio" class="col-md-4 col-form-label">
+										Bio
+									</label>
+									<div class="input-group col-md-8">
+										<textarea name="body" class="form-control" id="inputBio" rows="5"></textarea>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="form-group row">
+									<div class="col-md-12 text-center">
+										<button name="profileSubmit" type="submit" class="btn btn-primary">Save</button>
+									</div>
+								</div>
+
 							</div>
 
-							<div class="form-group row">
-								<div class="col-md-10">
-									<button name="profileSubmit" type="submit" class="btn btn-primary">Save</button>
-								</div>
+							<div class="col-md-6">
+								<img src='<?php echo retrieveProfilePicture($pdo, $_SESSION['id']); ?>' class='img-fluid rounded'>
 							</div>
 						</form>
 
