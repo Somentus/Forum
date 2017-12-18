@@ -113,7 +113,7 @@ function navbar($pdo) {
                 <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php?url='.$_SERVER['REQUEST_URI'].'">Log Out</a>
             </li>
         ';
     } else if(isLoggedIn()) {
@@ -123,7 +123,7 @@ function navbar($pdo) {
                 <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php?url='.$_SERVER['REQUEST_URI'].'">Log Out</a>
             </li>
         ';
     } else {

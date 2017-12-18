@@ -7,6 +7,10 @@ $pdo = DB();
 require_once($_SERVER["DOCUMENT_ROOT"].'/includes/codes.php');
 require_once($_SERVER["DOCUMENT_ROOT"].'/includes/settings.php');
 
+if(!isLoggedIn()) {
+	header('Location: /');
+}
+
 $securityErrors = [];
 $profileErrors = [];
 if(isset($_POST['securitySubmit'])) {

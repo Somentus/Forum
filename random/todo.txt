@@ -3,7 +3,6 @@ IN PROGRESS:
 SMALL:
 - Fix user links (once user pages have been implemented)
 - Add titles to pages
-- Direct visitor back to previous page if possible when logging out (?)
 - Reset password (when not logged in)
 - Make datepicker prettier (Settings->Profile->Birthdate)
 
@@ -31,6 +30,8 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Visitors not logged in can visit settings.php [BUG]
+- Direct visitor back to previous page if possible when logging out
 - MySQL error when deleting non-empty forum
 - Implement "change username" to Settings
 - Add backend to Settings->Profile
