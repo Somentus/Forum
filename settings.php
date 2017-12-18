@@ -122,7 +122,7 @@ if(isset($_POST['securitySubmit'])) {
 									<input type="file" class="form-control" id="inputPicture" name="image" />
 								</div>
 								<div class="col-md-6">
-									<img src='<?php retrieveProfilePicture($pdo); ?>' class='img-fluid rounded'>
+									<img src='<?php echo retrieveProfilePicture($pdo, $_SESSION['id']); ?>' class='img-fluid rounded'>
 								</div>
 							</div>
 

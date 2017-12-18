@@ -23,7 +23,7 @@ function content($pdo) {
 						<div class='col-md-1'>
 							<a name='".$post['id']."'></a>
 							<div class='pt-1'>
-								<img src='https://via.placeholder.com/75/fd7e14' class='img-fluid rounded'>
+								<img src='".retrieveProfilePicture($pdo, $user['id'])."' class='img-fluid rounded'>
 							</div>
 							<div>
 								<a href='user.php?id=".$user['id']."'>".htmlspecialchars($user['username'])."</a>

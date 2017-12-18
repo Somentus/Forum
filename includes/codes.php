@@ -445,15 +445,15 @@ function processImage($pdo, $files, $type, $foreign_id) {
 	return $replaced;
 }
 
-function retrieveProfilePicture($pdo) {
-	$image = query($pdo, "SELECT * FROM images WHERE foreign_id = :foreign_id AND type = 'user_id'", ['foreign_id' => $_SESSION['id']]);
+function retrieveProfilePicture($pdo, $user_id) {
+	$image = query($pdo, "SELECT * FROM images WHERE foreign_id = :foreign_id AND type = 'user_id'", ['foreign_id' => $user_id]);
 	if(count($image) == 1) {
 		$image = $image[0];
 		$uuid = $image['uuid'];
 		$extension = $image['extension'];
 		$imagePath = "/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/".substr($uuid, 2).".".$extension;
-		echo $imagePath;
+		return $imagePath;
 	} else {
-		echo "https://via.placeholder.com/75/fd7e14";
+		return "https://via.placeholder.com/75/fd7e14";
 	}
 }
