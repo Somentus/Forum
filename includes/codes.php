@@ -447,7 +447,7 @@ function processImage($pdo, $files, $type, $foreign_id) {
 
 function retrieveProfilePicture($pdo) {
 	$image = query($pdo, "SELECT * FROM images WHERE foreign_id = :foreign_id AND type = 'user_id'", ['foreign_id' => $_SESSION['id']]);
-	if(count($image == 1)) {
+	if(count($image) == 1) {
 		$image = $image[0];
 		$uuid = $image['uuid'];
 		$extension = $image['extension'];
