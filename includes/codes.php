@@ -453,3 +453,10 @@ function retrieveProfilePicture($pdo, $user_id) {
 		return "https://via.placeholder.com/75/fd7e14";
 	}
 }
+
+function retrieveBio($pdo, $user_id) {
+	$bio = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $user_id]);
+	if(count($bio) == 1) {
+		echo $bio[0]['bio'];
+	}
+}

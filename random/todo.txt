@@ -1,7 +1,5 @@
 IN PROGRESS:
-- Add backend to Settings->Profile:
-	- Birthdate
-	- Bio
+
 
 BUGS:
 - Portal doesn't show up outside index.php
@@ -36,6 +34,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Add backend to Settings->Profile
 - Images table only works for 1 on 1. Type & foreign_id is not a unique identifier anymore as soon as there's a post (or entity in general) with multiple images
 - Add profile picture, replace placeholders with user's profile pictures (https://stackoverflow.com/questions/8922056/what-is-the-best-way-to-upload-and-store-pictures-on-the-site)
 - Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php (fixed it by adding / to hrefs etc, apparently that refers to root). require_once however needed $_SERVER['DOCUMENT_ROOT'] (http://yagudaev.com/posts/resolving-php-relative-path-problem/).

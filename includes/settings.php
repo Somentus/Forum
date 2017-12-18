@@ -62,6 +62,20 @@ function profile($pdo) {
 		} else if($_FILES['image']['error'] == 1) {
 			$errors[] = "File size is too big, please upload files smaller than 2MB!";
 		}
+
+		if(isset($_POST['bio']) && !empty($_POST['bio'])) {
+			$bio = trim($_POST['bio']);
+			$currentBio = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $_SESSION['id']])[0]['bio'];
+			if($bio != $currentBio) {
+				query($pdo, "UPDATE users SET bio = :bio WHERE id = :id", ['id' => $_SESSION['id'], 'bio' => $bio]);
+				$errors[] = "Bio succesfully changed.";
+			}
+		}
+
+		if(isset($_POST['birthdate']) && !empty($_POST['birthdate'])) {
+			query($pdo, "UPDATE users SET birth_date = :birth_date WHERE id= :id", ['id' => $_SESSION['id'], 'birth_date' => $_POST['birthdate']]);
+			$errors[] = "Birthdate succesfully changed.";
+		}
 	}
 
 	return $errors;

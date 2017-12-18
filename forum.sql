@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2017 at 01:35 AM
+-- Generation Time: Dec 18, 2017 at 08:49 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -30,11 +30,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `priority` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
@@ -53,13 +53,13 @@ INSERT INTO `categories` (`id`, `name`, `priority`, `created_at`, `updated_at`) 
 
 CREATE TABLE `forums` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `category_id` int(11) NOT NULL,
   `is_subforum` tinyint(1) NOT NULL DEFAULT '0',
   `priority` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `forums`
@@ -84,12 +84,12 @@ INSERT INTO `forums` (`id`, `name`, `category_id`, `is_subforum`, `priority`, `c
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `body` varchar(512) NOT NULL,
+  `body` varchar(512) CHARACTER SET latin1 NOT NULL,
   `user_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `posts`
@@ -101,7 +101,35 @@ INSERT INTO `posts` (`id`, `body`, `user_id`, `topic_id`, `created_at`, `updated
 (4, 'Woah', 2, 85, '2017-12-12 19:31:48', '2017-12-12 19:31:48'),
 (5, 'This works :O', 2, 85, '2017-12-12 19:32:44', '2017-12-12 19:32:44'),
 (6, 'FOURTH!', 2, 85, '2017-12-12 22:59:45', '2017-12-12 22:59:45'),
-(7, 'And then you\'re going to have to decide whether IC or manpower is more important, because you\'re forced to either be stuck with a permanent -30% recruitable population malus, or be trapped in the Great Depression FOREVER.\r\n\r\nWhich is total fucking bullshit.', 2, 85, '2017-12-12 23:00:05', '2017-12-12 23:00:05');
+(7, 'And then you\'re going to have to decide whether IC or manpower is more important, because you\'re forced to either be stuck with a permanent -30% recruitable population malus, or be trapped in the Great Depression FOREVER.\r\n\r\nWhich is total fucking bullshit.', 2, 85, '2017-12-12 23:00:05', '2017-12-12 23:00:05'),
+(8, 'HOI RIK EN GIEL HIER <3', 3, 85, '2017-12-15 17:16:04', '2017-12-15 17:16:04'),
+(9, '<img src=\"https://media1.tenor.com/images/efc9f6ce8923eadf351b676f29bf943c/tenor.gif\">', 5, 87, '2017-12-15 20:44:36', '2017-12-15 20:44:36'),
+(10, 'tik tak tik tak', 5, 87, '2017-12-15 20:45:30', '2017-12-15 20:45:30'),
+(11, 'Hallo!', 6, 85, '2017-12-18 18:36:25', '2017-12-18 18:36:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile_pictures`
+--
+
+CREATE TABLE `profile_pictures` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(36) CHARACTER SET latin1 NOT NULL,
+  `extension` varchar(16) CHARACTER SET latin1 NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `profile_pictures`
+--
+
+INSERT INTO `profile_pictures` (`id`, `uuid`, `extension`, `user_id`, `created_at`, `updated_at`) VALUES
+(6, 'e412d921-f5c6-4ff6-9a91-fccbd00a4860', 'jpg', 2, '2017-12-18 16:51:42', '2017-12-18 16:51:42'),
+(7, 'b2ec28f9-7a47-44aa-a1e3-3aec4fe37c83', 'jpg', 3, '2017-12-18 17:29:07', '2017-12-18 18:29:35'),
+(8, 'ea0b372c-115b-476f-b8f1-9455eab293f6', 'jpg', 6, '2017-12-18 18:41:39', '2017-12-18 19:02:29');
 
 -- --------------------------------------------------------
 
@@ -111,13 +139,13 @@ INSERT INTO `posts` (`id`, `body`, `user_id`, `topic_id`, `created_at`, `updated
 
 CREATE TABLE `topics` (
   `id` int(11) NOT NULL,
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `forum_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `pinned` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `topics`
@@ -125,7 +153,8 @@ CREATE TABLE `topics` (
 
 INSERT INTO `topics` (`id`, `title`, `forum_id`, `user_id`, `pinned`, `created_at`, `updated_at`) VALUES
 (85, 'Weekly Announcements', 2, 4, 0, '2017-11-26 00:55:52', '2017-11-26 00:55:52'),
-(86, 'Last post?', 2, 2, 0, '2017-12-12 15:21:17', '2017-12-12 15:21:17');
+(86, 'Last post?', 2, 2, 0, '2017-12-12 15:21:17', '2017-12-12 15:21:17'),
+(87, 'HOI', 18, 5, 0, '2017-12-15 20:44:36', '2017-12-15 20:44:36');
 
 -- --------------------------------------------------------
 
@@ -135,22 +164,26 @@ INSERT INTO `topics` (`id`, `title`, `forum_id`, `user_id`, `pinned`, `created_a
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(254) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `birth_date` date NOT NULL,
+  `bio` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` date NOT NULL,
-  `updated_at` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_admin`, `created_at`, `updated_at`) VALUES
-(2, 'Somentus', 'somentus@gmail.com', '$2y$10$ojB0SIK3wxGbffeRu33h7edpeIFEKRXkjG7Qll6SzHb3Rlk6HpFc2', 1, '2017-11-22', '2017-11-22'),
-(3, 'Admin', 'admin@admin.nl', '$2y$10$vhj/B4h6ccwfFXAZZq96h.TKnX6LneGGs4m5BivlZFjh75fOTXoZq', 0, '2017-11-23', '2017-11-23'),
-(4, 'Test', 'test@test.test', '$2y$10$Tg1asW4hqzKpvmsy4ql7xOlnabYKKkz9aroN/vjbCIWt5dNLpl3y2', 0, '2017-11-26', '2017-11-26');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `birth_date`, `bio`, `is_admin`, `created_at`, `updated_at`) VALUES
+(2, 'Somentus', 'somentus@gmail.com', '$2y$10$4Fv9lJMf8RCR2JCO9QptG.rg37NPbSTM9PKHNA36v/LrobmzMAR9W', '1994-12-05', 'HOI ik ben MAAIKE!', 1, '2017-11-21 23:00:00', '2017-12-18 19:46:57'),
+(3, 'Admin', 'admin@admin.nl', '$2y$10$vhj/B4h6ccwfFXAZZq96h.TKnX6LneGGs4m5BivlZFjh75fOTXoZq', '0000-00-00', '', 0, '2017-11-22 23:00:00', '2017-11-22 23:00:00'),
+(4, 'Test', 'test@test.test', '$2y$10$Tg1asW4hqzKpvmsy4ql7xOlnabYKKkz9aroN/vjbCIWt5dNLpl3y2', '0000-00-00', '', 0, '2017-11-25 23:00:00', '2017-11-25 23:00:00'),
+(5, 'hoiikbengiel', 'hoiikbengiel@mailinator.com', '$2y$10$4sv9Kq9mqOBB7XwdM1TGJ.1DryC3LiBzLQVrJWOuShRfeafhk5R7C', '0000-00-00', '', 0, '2017-12-14 23:00:00', '2017-12-14 23:00:00'),
+(6, 'Maaike', 'ma@ai.ke', '$2y$10$7wz.1Qyq4jOPjuB5Ni2kl.GCHEUVD/GQHefWfPxmFMpTBxZSulgCa', '0000-00-00', '', 0, '2017-12-18 18:35:58', '2017-12-18 19:16:42');
 
 --
 -- Indexes for dumped tables
@@ -176,6 +209,12 @@ ALTER TABLE `posts`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `topic_id` (`topic_id`),
   ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `profile_pictures`
+--
+ALTER TABLE `profile_pictures`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `topics`
@@ -211,19 +250,25 @@ ALTER TABLE `forums`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `profile_pictures`
+--
+ALTER TABLE `profile_pictures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
