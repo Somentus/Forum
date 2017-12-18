@@ -436,11 +436,24 @@ function processImage($pdo, $files, $type, $foreign_id) {
 		move_uploaded_file($files['image']['tmp_name'], $save_path.$file_name.".".$file_extension);
 		
 		if($replaced) {
-			$query = query($pdo, "UPDATE images SET uuid = :uuid WHERE foreign_id= :foreign_id AND type = 'user_id'", ['uuid' => $uuid, 'foreign_id' => $foreign_id]);
+			$query = query($pdo, "UPDATE images SET uuid = :uuid WHERE foreign_id = :foreign_id AND type = 'user_id'", ['uuid' => $uuid, 'foreign_id' => $foreign_id]);
 		} else {
 			query($pdo, "INSERT INTO images (uuid, extension, type, foreign_id) VALUES (:uuid, :extension, :type, :foreign_id)", ['uuid' => $uuid, 'extension' => $file_extension, 'type' => $type, 'foreign_id' => $foreign_id]);
 		}
 	}
 
 	return $replaced;
+}
+
+function retrieveProfilePicture($pdo) {
+	$image = query($pdo, "SELECT * FROM images WHERE foreign_id = :foreign_id AND type = 'user_id'", ['foreign_id' => $_SESSION['id']]);
+	if(count($image == 1)) {
+		$image = $image[0];
+		$uuid = $image['uuid'];
+		$extension = $image['extension'];
+		$imagePath = "/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/".substr($uuid, 2).".".$extension;
+		echo $imagePath;
+	} else {
+		echo "https://via.placeholder.com/75/fd7e14";
+	}
 }

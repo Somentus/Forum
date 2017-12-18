@@ -115,9 +115,14 @@ if(isset($_POST['securitySubmit'])) {
 
 						<form action="settings.php" method="POST" enctype="multipart/form-data">
 							<div class="form-group row">
-								<label for="inputPicture" class="col-md-2 col-form-label">Profile Picture</label>
+								<label for="inputPicture" class="col-md-2 col-form-label">
+									Profile Picture
+								</label>
 								<div class="input-group col-md-4">
 									<input type="file" class="form-control" id="inputPicture" name="image" />
+								</div>
+								<div class="col-md-6">
+									<img src='<?php retrieveProfilePicture($pdo); ?>' class='img-fluid rounded'>
 								</div>
 							</div>
 
