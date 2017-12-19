@@ -1,8 +1,11 @@
 IN PROGRESS
+- Reset password (when not logged in)
+- Implement mail system:
+	- Activate account after registration
+	- Reset password
 
 SMALL:
 - Fix user links (once user pages have been implemented)
-- Reset password (when not logged in)
 
 MEDIUM:
 - Make datepicker prettier (Settings->Profile->Birthdate)
@@ -14,6 +17,7 @@ MEDIUM:
 - Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
 - Rework location display in navbar
 - Order topics by time since last post when displaying
+- After X attempts at logging in, wait Y seconds before you can retry logging in to prevent spamming
 
 BIG:
 - Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)

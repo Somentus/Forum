@@ -14,7 +14,7 @@ function togglePortal(to) {
 					document.getElementById("errors").innerHTML = "";
 					document.getElementById("navbarLogin").setAttribute("class", "nav-link");
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link");
-					toggle("portal", "none");	
+					toggle("portal", "none");
 				} else {
 					// Register is currently open, switch to login
 					document.getElementById("submit").setAttribute("name", "login");
@@ -24,6 +24,7 @@ function togglePortal(to) {
 					document.getElementById("usernameField").removeAttribute("required");
 					document.getElementById("errors").innerHTML = "";
 					toggle("username", "none");
+					toggle("reset_password", "block");
 				}
 			} else {
 				// Portal is closed, open it
@@ -35,6 +36,7 @@ function togglePortal(to) {
 				document.getElementById("usernameField").removeAttribute("required");
 				document.getElementById("errors").innerHTML = "";
 				toggle("username", "none");
+				toggle("reset_password", "block");
 			}
 
 			break;
@@ -57,7 +59,8 @@ function togglePortal(to) {
 					document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
 					document.getElementById("usernameField").setAttribute("required", true);
 					document.getElementById("errors").innerHTML = "";
-					toggle("username", "block"); 
+					toggle("username", "block");
+					toggle("reset_password", "none");
 				}
 			} else {
 				// Portal is closed, open it
@@ -68,7 +71,8 @@ function togglePortal(to) {
 				document.getElementById("navbarRegister").setAttribute("class", "nav-link active");
 				document.getElementById("usernameField").setAttribute("required", true);
 				document.getElementById("errors").innerHTML = "";
-				toggle("username", "block"); 
+				toggle("username", "block");
+				toggle("reset_password", "none");
 			}
 			break;
 		case 'close':

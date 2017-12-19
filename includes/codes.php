@@ -157,6 +157,8 @@ function portal($errors) {
   	echo '
   	</div>
 	<div id="portal" class="portal" style="display:none;">
+		<a id="reset_password" href="reset_password.php">Reset password</a>
+		
 		<form action="index.php" method="POST">
 			
 			<div id="username" style="display:none">
@@ -176,6 +178,7 @@ function portal($errors) {
 			<input id="submit" type="submit" name="login" value="Login" class="btn btn-primary" />
 			<br />
 		</form>
+
 	</div>
 	<br />
 	';
