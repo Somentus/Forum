@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2017 at 09:30 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Dec 19, 2017 at 02:33 PM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `forum`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activation_keys`
+--
+
+CREATE TABLE `activation_keys` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `uuid` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -73,6 +87,73 @@ INSERT INTO `forums` (`id`, `name`, `category_id`, `is_subforum`, `priority`, `c
 (15, 'Series', 12, 0, 0, '2017-11-22 12:44:49', '2017-11-28 17:26:55'),
 (16, 'What are you eating today?', 13, 0, 0, '2017-11-22 12:44:57', '2017-11-28 17:26:55'),
 (18, 'Funny gifs', 13, 0, 0, '2017-11-22 12:46:04', '2017-11-28 17:26:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `old_emails`
+--
+
+CREATE TABLE `old_emails` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `old_emails`
+--
+
+INSERT INTO `old_emails` (`id`, `user_id`, `email`, `created_at`, `updated_at`) VALUES
+(1, 8, 'somentus@gmail.com', '2017-12-19 12:53:42', '2017-12-19 12:53:42'),
+(2, 8, 'r.vd.t@hotmail.com', '2017-12-19 12:55:30', '2017-12-19 12:55:30'),
+(3, 8, 'somentus@gmail.com', '2017-12-19 12:56:09', '2017-12-19 12:56:09'),
+(4, 8, 'r.vd.t@hotmail.com', '2017-12-19 12:56:30', '2017-12-19 12:56:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `old_passwords`
+--
+
+CREATE TABLE `old_passwords` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `password` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `old_passwords`
+--
+
+INSERT INTO `old_passwords` (`id`, `user_id`, `password`, `created_at`, `updated_at`) VALUES
+(1, 8, '$2y$10$kpdTQRTVSuH8LvHTFPmG8O7IXMS5uNvwo5aqtI0.YYfyalmAqNPHe', '2017-12-19 13:11:33', '2017-12-19 13:11:33'),
+(2, 8, '$2y$10$IU4vc4oV8wSkxRVULKoNOuP8LVAW10dcOJc//VqWl5VnUW30Uacvm', '2017-12-19 13:15:03', '2017-12-19 13:15:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `old_usernames`
+--
+
+CREATE TABLE `old_usernames` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `username` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `old_usernames`
+--
+
+INSERT INTO `old_usernames` (`id`, `user_id`, `username`, `created_at`, `updated_at`) VALUES
+(1, 8, 'Terrie', '2017-12-19 13:02:32', '2017-12-19 13:02:32');
 
 -- --------------------------------------------------------
 
@@ -132,6 +213,27 @@ INSERT INTO `profile_pictures` (`id`, `uuid`, `extension`, `user_id`, `created_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reset_passwords`
+--
+
+CREATE TABLE `reset_passwords` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `uuid` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reset_passwords`
+--
+
+INSERT INTO `reset_passwords` (`id`, `user_id`, `uuid`, `created_at`, `updated_at`) VALUES
+(4, 2, 'cde07ff2-8dc0-4a58-92e8-ed84f88acd4a', '2017-12-19 11:46:21', '2017-12-19 11:46:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `topics`
 --
 
@@ -168,6 +270,7 @@ CREATE TABLE `users` (
   `birth_date` date NOT NULL,
   `bio` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -176,16 +279,25 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `birth_date`, `bio`, `is_admin`, `created_at`, `updated_at`) VALUES
-(2, 'Somentus', 'somentus@gmail.com', '$2y$10$4Fv9lJMf8RCR2JCO9QptG.rg37NPbSTM9PKHNA36v/LrobmzMAR9W', '1994-12-05', 'HOI ik ben MAAIKE!', 1, '2017-11-21 23:00:00', '2017-12-18 20:01:36'),
-(3, 'Admin', 'admin@admin.nl', '$2y$10$vhj/B4h6ccwfFXAZZq96h.TKnX6LneGGs4m5BivlZFjh75fOTXoZq', '0000-00-00', '', 0, '2017-11-22 23:00:00', '2017-11-22 23:00:00'),
-(4, 'Test', 'test@test.test', '$2y$10$Tg1asW4hqzKpvmsy4ql7xOlnabYKKkz9aroN/vjbCIWt5dNLpl3y2', '0000-00-00', '', 0, '2017-11-25 23:00:00', '2017-11-25 23:00:00'),
-(5, 'hoiikbengiel', 'hoiikbengiel@mailinator.com', '$2y$10$4sv9Kq9mqOBB7XwdM1TGJ.1DryC3LiBzLQVrJWOuShRfeafhk5R7C', '0000-00-00', '', 0, '2017-12-14 23:00:00', '2017-12-14 23:00:00'),
-(6, 'Maaike', 'ma@ai.ke', '$2y$10$7wz.1Qyq4jOPjuB5Ni2kl.GCHEUVD/GQHefWfPxmFMpTBxZSulgCa', '0000-00-00', '', 0, '2017-12-18 18:35:58', '2017-12-18 19:16:42');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `birth_date`, `bio`, `is_admin`, `is_active`, `created_at`, `updated_at`) VALUES
+(2, 'Somentus', 'ter@gmail.com', '$2y$10$65zQRCys.vmrdKywecVlbO0Ne2bZ15RCDbDgoi/oEiXuvSqC/QAs6', '1994-12-05', 'HOI ik ben MAAIKE!', 1, 1, '2017-11-21 23:00:00', '2017-12-19 12:11:29'),
+(3, 'Admin', 'admin@admin.nl', '$2y$10$vhj/B4h6ccwfFXAZZq96h.TKnX6LneGGs4m5BivlZFjh75fOTXoZq', '0000-00-00', '', 0, 1, '2017-11-22 23:00:00', '2017-12-19 12:11:29'),
+(4, 'Test', 'test@test.test', '$2y$10$Tg1asW4hqzKpvmsy4ql7xOlnabYKKkz9aroN/vjbCIWt5dNLpl3y2', '0000-00-00', '', 0, 1, '2017-11-25 23:00:00', '2017-12-19 12:11:29'),
+(5, 'hoiikbengiel', 'hoiikbengiel@mailinator.com', '$2y$10$4sv9Kq9mqOBB7XwdM1TGJ.1DryC3LiBzLQVrJWOuShRfeafhk5R7C', '0000-00-00', '', 0, 1, '2017-12-14 23:00:00', '2017-12-19 12:11:29'),
+(6, 'Maaike', 'ma@ai.ke', '$2y$10$7wz.1Qyq4jOPjuB5Ni2kl.GCHEUVD/GQHefWfPxmFMpTBxZSulgCa', '0000-00-00', '', 0, 1, '2017-12-18 18:35:58', '2017-12-19 12:11:29'),
+(7, 'Terryz', 'terry@gmail.com', '$2y$10$SNFvYyGNK/582tTV/VnysuJhbWvEIeNRYivEjPzylvjA4xIdUmcoG', '0000-00-00', '', 0, 1, '2017-12-19 11:59:31', '2017-12-19 13:02:29'),
+(8, 'Terry', 'somentus@gmail.com', '$2y$10$4Chh0HcnKIQ0kXc7jBk9B.UqwYpFC03/H3kbazJ66MWcXGTbNE8Ne', '0000-00-00', '', 0, 1, '2017-12-19 12:01:14', '2017-12-19 13:15:03');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `activation_keys`
+--
+ALTER TABLE `activation_keys`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `categories`
@@ -201,6 +313,24 @@ ALTER TABLE `forums`
   ADD KEY `category_id` (`category_id`) USING BTREE;
 
 --
+-- Indexes for table `old_emails`
+--
+ALTER TABLE `old_emails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `old_passwords`
+--
+ALTER TABLE `old_passwords`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `old_usernames`
+--
+ALTER TABLE `old_usernames`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
@@ -212,7 +342,15 @@ ALTER TABLE `posts`
 -- Indexes for table `profile_pictures`
 --
 ALTER TABLE `profile_pictures`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `reset_passwords`
+--
+ALTER TABLE `reset_passwords`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `topics`
@@ -233,6 +371,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `activation_keys`
+--
+ALTER TABLE `activation_keys`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -243,6 +387,24 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `forums`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `old_emails`
+--
+ALTER TABLE `old_emails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `old_passwords`
+--
+ALTER TABLE `old_passwords`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `old_usernames`
+--
+ALTER TABLE `old_usernames`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -257,6 +419,12 @@ ALTER TABLE `profile_pictures`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `reset_passwords`
+--
+ALTER TABLE `reset_passwords`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
@@ -266,11 +434,17 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `activation_keys`
+--
+ALTER TABLE `activation_keys`
+  ADD CONSTRAINT `activation_keys_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `forums`
@@ -284,6 +458,18 @@ ALTER TABLE `forums`
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `profile_pictures`
+--
+ALTER TABLE `profile_pictures`
+  ADD CONSTRAINT `profile_pictures_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reset_passwords`
+--
+ALTER TABLE `reset_passwords`
+  ADD CONSTRAINT `reset_passwords_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `topics`
