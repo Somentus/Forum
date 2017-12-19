@@ -229,8 +229,6 @@ function register($pdo) {
 		$unVerifiedEmail = $_POST['email'];
 		$unVerifiedPassword = $_POST['password'];
 
-		
-
 		// Check if username already exists
 		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username = :username", ['username' => $unVerifiedUsername]);
 		if(count($usernameAlreadyExists) >= 1) {
@@ -281,7 +279,7 @@ function register($pdo) {
 			  <title>'.$subject.'</title>
 			</head>
 			<body>
-			  <p>Welcome to the website!.</p>
+			  <p>Welcome to the website!</p>
 			  <p>Please click here to activate your account:</p>
 			  <a href="http://localhost/activate.php?uuid='.$uuid.'&user_id='.$user_id.'">CLICKITY</a>
 			</body>
@@ -293,8 +291,8 @@ function register($pdo) {
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			// Additional headers
-			$headers[] = 'To: Somentus <somentus@gmail.com>';
-			$headers[] = 'From: Functional Forum <somentusforum@gmail.com>';
+			$headers[] = "To: ".$username." <".$email.">";
+			$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
 
 			// Mail it
 			mail($to, $subject, $message, implode("\r\n", $headers));

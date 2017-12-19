@@ -67,8 +67,8 @@ function resetPassword($pdo) {
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			// Additional headers
-			$headers[] = 'To: Somentus <somentus@gmail.com>';
-			$headers[] = 'From: Functional Forum <somentusforum@gmail.com>';
+			$headers[] = "To: ".$user['username']." <".$to.">";
+			$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
 
 			// Mail it
 			mail($to, $subject, $message, implode("\r\n", $headers));
