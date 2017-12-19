@@ -77,6 +77,8 @@ function resetPassword($pdo) {
 
 			// Mail it
 			mail($to, $subject, $message, implode("\r\n", $headers));
+
+			$errors[] = "Please check your mail for further instructions on how to enter a new password.";
 		}
 	}
 

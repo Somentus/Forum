@@ -5,6 +5,7 @@ SMALL:
 - Fix user links (once user pages have been implemented)
 
 MEDIUM:
+- Make errors prettier
 - Make emails prettier
 - Make datepicker prettier (Settings->Profile->Birthdate)
 - Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab. [BUG]
