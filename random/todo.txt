@@ -1,8 +1,8 @@
 IN PROGRESS
-- Send email when changing password 
-- Send email when changing email address
 
 SMALL:
+- Write function to send emails
+- More information in emails (who is the user, what is the email about, what website is the email from)
 - Fix user links (once user pages have been implemented)
 
 MEDIUM:
@@ -34,6 +34,10 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Display users' current username and email address on settings page
+- Send email when changing password
+- Send email when changing username
+- Send email when changing email address
 - Implement mail system for activation of account after registration
 - Implement mail system for reset password
 - Reset password (when not logged in)

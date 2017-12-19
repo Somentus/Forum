@@ -47,18 +47,6 @@ if(isset($_POST['securitySubmit'])) {
 
 	<br />
 	<div class="container">
-
-				<!-- 
-				
-				- Security:
-					- Change email
-					- Change password
-				- Personal info:
-					- Profile picture
-					- Birthdate
-					- Bio
-
-				-->
 		<div class="row">
 			<div class="col-md-2">
 				<div class="nav flex-column nav-pills border" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -83,6 +71,24 @@ if(isset($_POST['securitySubmit'])) {
 							?>
 						</div>
 
+						<div class="row">
+							<div class="col-md-2">
+								Username:
+							</div>
+							<div class="col-md-4">
+								<?php echo getUsername($pdo); ?>
+							</div>
+
+							<div class="col-md-2">
+								Email Address:
+							</div>
+							<div class="col-md-4">
+								<?php echo getEmail($pdo); ?>
+							</div>
+						</div>
+
+						<hr>
+
 						<form action="settings.php" method="POST">
 							<div class="form-group row">
 								<label for="inputUsername" class="col-md-2 col-form-label">New Username:</label>
@@ -106,6 +112,8 @@ if(isset($_POST['securitySubmit'])) {
 									<input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
 									<div class="input-group-addon">$</div>
 								</div>
+
+								<!-- TODO: Insert password strength -->
 							</div>
 
 							<hr>

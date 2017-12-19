@@ -17,7 +17,36 @@ function security($pdo) {
 				$oldUsername = $user['username'];
 
 				if($oldUsername != $newUsername) {
+					$user_id = $user['id'];
+					query($pdo, "INSERT INTO old_usernames (user_id, username) VALUES (:user_id, :username)", ['user_id' => $user_id, 'username' => $oldUsername]);
 					query($pdo, "UPDATE users SET username = :username WHERE id = :id", ['id' => $_SESSION['id'], 'username' => $newUsername]);
+
+					$to = $user['email'];
+					$subject = 'Username changed!';
+					$message = '
+					<!DOCTYPE HTML>
+
+					<html lang="en">
+					<head>
+					  <meta charset="utf-8">
+					  <title>'.$subject.'</title>
+					</head>
+					<body>
+					  <p>Your username has been changed to: '.$newUsername.'.</p>
+					</body>
+					</html>
+					';
+
+					// To send HTML mail, the Content-type header must be set
+					$headers[] = 'MIME-Version: 1.0';
+					$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+					// Additional headers
+					$headers[] = "To: ".$user['username']." <".$to.">";
+					$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
+
+					// Mail it
+					mail($to, $subject, $message, implode("\r\n", $headers));
 				}
 				$errors[] = "Username succesfully changed to $newUsername.";
 			}
@@ -39,7 +68,36 @@ function security($pdo) {
 					$oldEmail = $user['email'];
 
 					if($oldEmail != $newEmail) {
+						$user_id = $user['id'];
+						query($pdo, "INSERT INTO old_emails (user_id, email) VALUES (:user_id, :email)", ['user_id' => $user_id, 'email' => $oldEmail]);
 						query($pdo, "UPDATE users SET email = :email WHERE id = :id", ['id' => $_SESSION['id'], 'email' => $newEmail]);
+
+						$to = $oldEmail;
+						$subject = 'Email address changed!';
+						$message = '
+						<!DOCTYPE HTML>
+
+						<html lang="en">
+						<head>
+						  <meta charset="utf-8">
+						  <title>'.$subject.'</title>
+						</head>
+						<body>
+						  <p>Your email address has been changed to: '.$newEmail.'.</p>
+						</body>
+						</html>
+						';
+
+						// To send HTML mail, the Content-type header must be set
+						$headers[] = 'MIME-Version: 1.0';
+						$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+						// Additional headers
+						$headers[] = "To: ".$user['username']." <".$to.">";
+						$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
+
+						// Mail it
+						mail($to, $subject, $message, implode("\r\n", $headers));
 					}
 					$errors[] = "Emailaddress succesfully changed to $newEmail.";
 				}
@@ -56,7 +114,42 @@ function security($pdo) {
 				// TODO Check if password is strong enough
 				$password = password_hash($unVerifiedPassword, PASSWORD_DEFAULT);
 
+				$user = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $_SESSION['id']])[0];
+				$oldPassword = $user['password'];
+				$user_id = $user['id'];
+				$email = $user['email'];
+
+				query($pdo, "INSERT INTO old_passwords (user_id, password) VALUES (:user_id, :password)", ['user_id' => $user_id, 'password' => $oldPassword]);
 				query($pdo, "UPDATE users SET password = :password WHERE id = :id", ['id' => $_SESSION['id'], 'password' => $password]);
+
+				$to = $email;
+				$subject = 'Password changed!';
+				$message = '
+				<!DOCTYPE HTML>
+
+				<html lang="en">
+				<head>
+				  <meta charset="utf-8">
+				  <title>'.$subject.'</title>
+				</head>
+				<body>
+				  <p>Your password has been changed.</p>
+				</body>
+				</html>
+				';
+
+				// To send HTML mail, the Content-type header must be set
+				$headers[] = 'MIME-Version: 1.0';
+				$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+				// Additional headers
+				$headers[] = "To: ".$user['username']." <".$to.">";
+				$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
+
+				// Mail it
+				mail($to, $subject, $message, implode("\r\n", $headers));
+
+				// TODO: Send email to email address, store old password somewhere
 				$errors[] = "Password succesfully changed.";
 			}
 		}
@@ -96,6 +189,18 @@ function profile($pdo) {
 	}
 
 	return $errors;
+}
+
+function getUser($pdo, $id) {
+	return query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $id])[0];
+}
+
+function getUsername($pdo) {
+	return getUser($pdo, $_SESSION['id'])['username'];;
+}
+
+function getEmail($pdo) {
+	return getUser($pdo, $_SESSION['id'])['email'];;
 }
 
 ?>
