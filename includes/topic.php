@@ -2,7 +2,7 @@
 
 function content($pdo) {
 	$id = $_GET['id'];
-	$topic = query($pdo, "SELECT * FROM topics WHERE id= :id", ['id' => $id]);
+	$topic = query($pdo, "SELECT * FROM topics WHERE id = :id", ['id' => $id]);
 	if(count($topic) == 0) {
 		echo "Topic not found!";
 	} else if(count($topic) == 1) {
@@ -10,7 +10,7 @@ function content($pdo) {
 		// TODO: Verify if user has access to current topic
 
 		echo '
-				<h6>'.$topic['title'].'</h6>';
+				<h6>'.htmlspecialchars($topic['title']).'</h6>';
 
 		$posts = query($pdo, "SELECT * FROM posts WHERE topic_id = :topic_id", ['topic_id' => $id]);
 		if(count($posts) == 0) {
@@ -23,17 +23,17 @@ function content($pdo) {
 						<div class='col-md-1'>
 							<a name='".$post['id']."'></a>
 							<div class='pt-1'>
-								<img src='https://via.placeholder.com/75/fd7e14' class='img-fluid rounded'>
+								<img src='".retrieveProfilePicture($pdo, $user['id'])."' class='img-fluid rounded'>
 							</div>
 							<div>
-								<a href='user.php?id=".$user['id']."'>".$user['username']."</a>
+								<a href='user.php?id=".$user['id']."'>".htmlspecialchars($user['username'])."</a>
 							</div>
 						</div>
 						<div class='col-md-11'>
 							<span class='float-right'>
 								<small class='text-muted'>".ucfirst(parseTimeSinceTimestamp($post['created_at']))."</small>
 							</span>
-							".$post['body']."
+							".htmlspecialchars($post['body'])."
 						</div>
 					</div>
 					<br />";
@@ -45,7 +45,7 @@ function content($pdo) {
 function post($pdo) {
 	if(isLoggedIn()) {
 		echo '
-			<form action="topic.php?topic_id='.$_GET['id'].'" method="POST">
+			<form action="topic.php?topic_id='.htmlspecialchars($_GET['id']).'" method="POST">
 				<div class="form-group">
 					<textarea name="body" class="form-control" id="body" rows="3"></textarea>
 				</div
@@ -56,8 +56,8 @@ function post($pdo) {
 		';
 
 		if(isset($_POST['post'])) {
-			$topic_id = $_GET['topic_id'];
-			$body = $_POST['body'];
+			$topic_id = htmlspecialchars($_GET['topic_id']);
+			$body = htmlspecialchars($_POST['body']);
 			$user_id = $_SESSION['id'];
 
 			// If no errors, register user
@@ -65,6 +65,11 @@ function post($pdo) {
 			header('location:topic.php?id='.$topic_id);
 		}
 	}
+}
+
+function topicGetTitle($pdo, $id) {
+	$topic = query($pdo, "SELECT * FROM topics WHERE id = :id", ['id' => $id])[0];
+	return $topic['title'];
 }
 
 ?>

@@ -1,12 +1,32 @@
-TODO:
-- Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
-- Order forums by time since last post when displaying
-- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php
-- Direct visitor back to previous page if possible when logging out (?)
-- Add user page
-- Add profile picture, replace placeholders with user's profile pictures
+IN PROGRESS
+
+SMALL:
+- Write function to send emails
+- More information in emails (who is the user, what is the email about, what website is the email from)
+- Fix user links (once user pages have been implemented)
+
+MEDIUM:
+- Make errors prettier
+- Make emails prettier
+- Make datepicker prettier (Settings->Profile->Birthdate)
+- Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab. [BUG]
+- Fix/remove glyphicons from Admin tables [BUG]
+- Portal doesn't show up outside index.php [BUG]
+- Make settings show the users' own information (username, email address, birthdate etc)
+- Add user page (public profile)
+- Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
+- Rework location display in navbar
+- Order topics by time since last post when displaying
+- After X attempts at logging in, wait Y seconds before you can retry logging in to prevent spamming
+
+BIG:
+- Public user profile
+- Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)
+- Routes (clean URL)
 
 IDEA:
+- Night mode (https://bootswatch.com/darkly/)
+- Hover over time since to show exact date/time
 - Verify if user has access to current forum
 - Verify if user has access to current topic
 - Take a look at session_regenerate_id (https://secure.php.net/manual/en/function.session-regenerate-id.php)
@@ -14,6 +34,25 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Display users' current username and email address on settings page
+- Send email when changing password
+- Send email when changing username
+- Send email when changing email address
+- Implement mail system for activation of account after registration
+- Implement mail system for reset password
+- Reset password (when not logged in)
+- Visiting forum.php or topic.php without $_GET['id'] results in many errors [BUG]
+- Add titles to pages
+- Visitors not logged in can visit settings.php [BUG]
+- Direct visitor back to previous page if possible when logging out
+- MySQL error when deleting non-empty forum
+- Implement "change username" to Settings
+- Add backend to Settings->Profile
+- Images table only works for 1 on 1. Type & foreign_id is not a unique identifier anymore as soon as there's a post (or entity in general) with multiple images
+- Add profile picture, replace placeholders with user's profile pictures (https://stackoverflow.com/questions/8922056/what-is-the-best-way-to-upload-and-store-pictures-on-the-site)
+- Document root for a hrefs. Logout for admin isn't working since it's linking to /admin/logout.php (fixed it by adding / to hrefs etc, apparently that refers to root). require_once however needed $_SERVER['DOCUMENT_ROOT'] (http://yagudaev.com/posts/resolving-php-relative-path-problem/).
+- Sanitise HTML output (htmlspecialchars)
+- Replace all evaluations of $_SESSION['loggedin'] etc by isLoggedIn() function
 - Order categories by priority when displaying
 - Do login with email rather than username
 - Make LOGIN and REGISTER buttons actually toggle, rather than only open the portal. If login is open and login is clicked, login should close

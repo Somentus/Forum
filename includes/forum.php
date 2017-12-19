@@ -4,7 +4,7 @@ function content($pdo) {
 	$errors = [];
 
 	$id = $_GET['id'];
-	$forum = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+	$forum = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id]);
 	if(count($forum) == 0) {
 		$errors[] = "Forum not found!";
 	} else if(count($forum) == 1) {
@@ -15,19 +15,19 @@ function content($pdo) {
 			<div class="col-md-12">';
 
 		if(isLoggedIn()) {
-			echo '<a href="create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
+			echo '<a href="/create_topic.php?id='.$id.'" class="btn btn-primary">Create new topic</a>';
 		}
 		echo '	<br />
 				<br />';
 
-		$topics = query($pdo, "SELECT * FROM topics WHERE forum_id= :forum_id", ['forum_id' => $id]);
+		$topics = query($pdo, "SELECT * FROM topics WHERE forum_id = :forum_id", ['forum_id' => $id]);
 		if(count($topics) == 0) {
 			echo "No topics yet!";
 		} else {
 			echo "
 				<div class='row border border-secondary'>
 					<div class='col-md-12'>
-						".$forum['name']
+						".htmlspecialchars($forum['name'])
 			;
 
 			foreach($topics as $topic) {
@@ -36,7 +36,7 @@ function content($pdo) {
 				echo "
 				<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 					<div class='col-md-6'>
-						<a href='../topic.php?id=".$topic['id']."'>".$topic['title']."</a>
+						<a href='../topic.php?id=".$topic['id']."'>".htmlspecialchars($topic['title'])."</a>
 					</div>
 
 					<div class='col-md-6'>
@@ -46,7 +46,7 @@ function content($pdo) {
 					// echo $lastPostUser['username']." - ".$lastPost['created_at'];
 					echo "	<div>
 								<span class='float-right'>
-									<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a>
+									<a href='user.php?id=".$lastPostUser['id']."'>".htmlspecialchars($lastPostUser['username'])."</a>
 								</span>
 							</div>
 							<div>
@@ -74,6 +74,11 @@ function content($pdo) {
 
 
 	return $errors;
+}
+
+function forumGetName($pdo, $id) {
+	$forum = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id])[0];
+	return $forum['name'];
 }
 
 ?>

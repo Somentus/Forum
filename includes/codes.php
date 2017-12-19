@@ -55,7 +55,7 @@ function navbar($pdo) {
 
     echo '
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.php">Forum</a>
+        <a class="navbar-brand" href="/index.php">Forum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -72,7 +72,7 @@ function navbar($pdo) {
 				echo ' active';
 			}
     		echo '" >
-    			<a class="nav-link" href="./categories.php">Categories</a>
+    			<a class="nav-link" href="/admin/categories.php">Categories</a>
 			</li>
 			<span class="navbar-text">|</span>
 			<li class="nav-item';
@@ -82,7 +82,7 @@ function navbar($pdo) {
 			}
 
 			echo '" >
-				<a class="nav-link" href="./forums.php">Forums</a>
+				<a class="nav-link" href="/admin/forums.php">Forums</a>
 			</li>
 		';
     } else {
@@ -110,20 +110,20 @@ function navbar($pdo) {
     	// Visitor is an admin
         echo '
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php?url='.$_SERVER['REQUEST_URI'].'">Log Out</a>
             </li>
         ';
     } else if(isLoggedIn()) {
     	// Visitor is normal user
        	echo '
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/settings.php">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Log Out</a>
+                <a class="nav-link" href="/logout.php?url='.$_SERVER['REQUEST_URI'].'">Log Out</a>
             </li>
         ';
     } else {
@@ -157,6 +157,8 @@ function portal($errors) {
   	echo '
   	</div>
 	<div id="portal" class="portal" style="display:none;">
+		<a id="reset_password" href="reset_password.php">Reset password</a>
+		
 		<form action="index.php" method="POST">
 			
 			<div id="username" style="display:none">
@@ -176,6 +178,7 @@ function portal($errors) {
 			<input id="submit" type="submit" name="login" value="Login" class="btn btn-primary" />
 			<br />
 		</form>
+
 	</div>
 	<br />
 	';
@@ -188,7 +191,7 @@ function login($pdo) {
 	    $email = $_POST['email'];
 	    $password = $_POST['password'];
 
-	    $user = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $email]);
+	    $user = query($pdo, "SELECT * FROM users WHERE email = :email", ['email' => $email]);
 	    if(count($user) == 1) {
 	        // User found
 	        $user = $user[0];
@@ -226,10 +229,8 @@ function register($pdo) {
 		$unVerifiedEmail = $_POST['email'];
 		$unVerifiedPassword = $_POST['password'];
 
-		
-
 		// Check if username already exists
-		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $unVerifiedUsername]);
+		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username = :username", ['username' => $unVerifiedUsername]);
 		if(count($usernameAlreadyExists) >= 1) {
 			$errors[] = "Username already exists.";
 		} else {
@@ -240,7 +241,7 @@ function register($pdo) {
 		if(!filter_var($unVerifiedEmail, FILTER_VALIDATE_EMAIL)) {
 			$errors[] = "Please enter a valid email address." ;
 		} else {
-			$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $unVerifiedEmail]);
+			$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email = :email", ['email' => $unVerifiedEmail]);
 			if(count($emailAlreadyExists) >= 1) {
 				$errors[] = "Email address already exists." ;
 			} else {
@@ -260,7 +261,42 @@ function register($pdo) {
 
 		// If no errors, register user
 		if (empty($errors)) {
-			$query = query($pdo, "INSERT INTO users (id, username, email, password, created_at, updated_at) VALUES (:id, :username, :email, :password, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'username' => $username, 'email' => $email, 'password' => $password]);
+			$query = query($pdo, "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)", ['username' => $username, 'email' => $email, 'password' => $password]);
+
+			$user_id = $pdo->lastInsertId();
+			$uuid = generate_uuid();
+	
+			$query = query($pdo, "INSERT INTO activation_keys (user_id, uuid) VALUES (:user_id, :uuid)", ['user_id' => $user_id, 'uuid' => $uuid]);
+
+			$to = $email;
+			$subject = 'Registration complete!';
+			$message = '
+			<!DOCTYPE HTML>
+
+			<html lang="en">
+			<head>
+			  <meta charset="utf-8">
+			  <title>'.$subject.'</title>
+			</head>
+			<body>
+			  <p>Welcome to the website!</p>
+			  <p>Please click here to activate your account:</p>
+			  <a href="http://localhost/activate.php?uuid='.$uuid.'&user_id='.$user_id.'">CLICKITY</a>
+			</body>
+			</html>
+			';
+
+			// To send HTML mail, the Content-type header must be set
+			$headers[] = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+			// Additional headers
+			$headers[] = "To: ".$username." <".$email.">";
+			$headers[] = "From: Functional Forum <somentusforum@gmail.com>";
+
+			// Mail it
+			mail($to, $subject, $message, implode("\r\n", $headers));
+
 			$errors[] = "User succesfully registered.";
 		}
 	}
@@ -273,14 +309,14 @@ function body($pdo) {
 
 	foreach($categories as $category) {
 		echo "<div class='row border border-secondary'>";
-			echo $category['name'];
+			echo htmlspecialchars($category['name']);
 			$forums = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $category['id']]);
 			foreach($forums as $forum) {
 				echo "
 					<div class='col-md-12'>
 						<div class='row border border-secondary border-left-0 border-right-0 border-bottom-0' >
 							<div class='col-md-6'>
-								<a href='forum.php?id=".$forum['id']."''>".$forum['name']."</a>
+								<a href='forum.php?id=".$forum['id']."''>".htmlspecialchars($forum['name'])."</a>
 							</div>
 							<div class='col-md-6'>";
 
@@ -291,11 +327,11 @@ function body($pdo) {
 					$lastPostTopic = query($pdo, "SELECT * FROM topics WHERE id = :topic_id", ['topic_id' => $lastPost['topic_id']])[0];	
 					echo "
 									<span class='float-right'>	
-										<a href='topic.php?id=".$lastPostTopic['id']."'>".$lastPostTopic['title']."</a>
+										<a href='topic.php?id=".$lastPostTopic['id']."'>".htmlspecialchars($lastPostTopic['title'])."</a>
 									</span>
 									<br/>
 									<span class='float-right'>
-										<a href='user.php?id=".$lastPostUser['id']."'>".$lastPostUser['username']."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
+										<a href='user.php?id=".$lastPostUser['id']."'>".htmlspecialchars($lastPostUser['username'])."</a> - ".parseTimeSinceTimestamp($lastPost['created_at'])."
 									</span>";
 
 				} else {
@@ -386,5 +422,77 @@ function isLoggedIn($admin = false) {
 		}
 	} else {
 		return 0;
+	}
+}
+
+function generate_uuid() {
+	return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+		mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+		mt_rand( 0, 0xffff ),
+		mt_rand( 0, 0x0fff ) | 0x4000,
+		mt_rand( 0, 0x3fff ) | 0x8000,
+		mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+	);
+}
+
+function processImage($pdo, $files, $user_id) {
+	$replaced = 0;
+
+	if($files['image']['name']) {
+		$uuid = generate_uuid();
+
+		// Verify if UUID already exists
+		$uuidAlreadyExists = query($pdo, "SELECT * FROM profile_pictures WHERE uuid = :uuid", ['uuid' => $uuid]);
+		while(count($uuidAlreadyExists) != 0) {
+			$uuid = generate_uuid();
+			$uuidAlreadyExists = query($pdo, "SELECT * FROM profile_pictures WHERE uuid = :uuid", ['uuid' => $uuid]);
+		}
+
+		$save_path = getcwd()."/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/";
+		$file_name = substr($uuid, 2);
+		$file_extension = pathinfo($files['image']['name'], PATHINFO_EXTENSION);
+
+		// Check if user already has a picture
+		$verify = query($pdo, "SELECT * FROM profile_pictures WHERE user_id = :user_id", ['user_id' => $user_id]);
+		if(count($verify)) {
+			// User already has a profile picture
+			$picture = $verify[0];
+			$picture_old_save_path = getcwd()."/img/".substr($picture['uuid'], 0, 1)."/".substr($picture['uuid'], 1, 1)."/".substr($picture['uuid'], 2).".".$file_extension;
+			unlink($picture_old_save_path);
+			$replaced = 1;
+		}
+
+		if(!is_dir($save_path)) {
+			mkdir($save_path, 0777, true);
+		}
+		move_uploaded_file($files['image']['tmp_name'], $save_path.$file_name.".".$file_extension);
+		
+		if($replaced) {
+			$query = query($pdo, "UPDATE profile_pictures SET uuid = :uuid WHERE user_id = :user_id", ['uuid' => $uuid, 'user_id' => $user_id]);
+		} else {
+			query($pdo, "INSERT INTO profile_pictures (uuid, extension, user_id) VALUES (:uuid, :extension, :user_id)", ['uuid' => $uuid, 'extension' => $file_extension, 'user_id' => $user_id]);
+		}
+	}
+
+	return $replaced;
+}
+
+function retrieveProfilePicture($pdo, $user_id) {
+	$image = query($pdo, "SELECT * FROM profile_pictures WHERE user_id = :user_id", ['user_id' => $user_id]);
+	if(count($image) == 1) {
+		$image = $image[0];
+		$uuid = $image['uuid'];
+		$extension = $image['extension'];
+		$imagePath = "/img/".substr($uuid, 0, 1)."/".substr($uuid, 1, 1)."/".substr($uuid, 2).".".$extension;
+		return $imagePath;
+	} else {
+		return "https://via.placeholder.com/75/fd7e14";
+	}
+}
+
+function retrieveBio($pdo, $user_id) {
+	$bio = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $user_id]);
+	if(count($bio) == 1) {
+		echo $bio[0]['bio'];
 	}
 }
