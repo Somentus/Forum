@@ -66,7 +66,7 @@ if(isset($_POST['resetPassword'])) {
 
 			<div class="form-group row">
 				<div class="col-md-12 text-center">
-					<button name="securitySubmit" type="submit" class="btn btn-primary">Save</button>
+					<button name="resetPassword" type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</div>
 		</form>

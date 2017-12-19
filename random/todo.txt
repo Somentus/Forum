@@ -1,13 +1,11 @@
 IN PROGRESS
-- Reset password (when not logged in)
-- Implement mail system:
-	- Activate account after registration
-	- Reset password
+- Implement mail system for activation of account after registration
 
 SMALL:
 - Fix user links (once user pages have been implemented)
 
 MEDIUM:
+- Make emails prettier
 - Make datepicker prettier (Settings->Profile->Birthdate)
 - Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab. [BUG]
 - Fix/remove glyphicons from Admin tables [BUG]
@@ -33,6 +31,8 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Implement mail system for reset password
+- Reset password (when not logged in)
 - Visiting forum.php or topic.php without $_GET['id'] results in many errors [BUG]
 - Add titles to pages
 - Visitors not logged in can visit settings.php [BUG]
