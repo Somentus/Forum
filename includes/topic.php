@@ -67,4 +67,9 @@ function post($pdo) {
 	}
 }
 
+function topicGetTitle($pdo, $id) {
+	$topic = query($pdo, "SELECT * FROM topics WHERE id = :id", ['id' => $id])[0];
+	return $topic['title'];
+}
+
 ?>

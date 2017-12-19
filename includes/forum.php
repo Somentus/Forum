@@ -76,4 +76,9 @@ function content($pdo) {
 	return $errors;
 }
 
+function forumGetName($pdo, $id) {
+	$forum = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id])[0];
+	return $forum['name'];
+}
+
 ?>

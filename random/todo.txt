@@ -1,8 +1,7 @@
-IN PROGRESS:
+IN PROGRESS
 
 SMALL:
 - Fix user links (once user pages have been implemented)
-- Add titles to pages
 - Reset password (when not logged in)
 
 MEDIUM:
@@ -21,7 +20,7 @@ BIG:
 - Routes (clean URL)
 
 IDEA:
-- Night mode
+- Night mode (https://bootswatch.com/darkly/)
 - Hover over time since to show exact date/time
 - Verify if user has access to current forum
 - Verify if user has access to current topic
@@ -30,6 +29,8 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Visiting forum.php or topic.php without $_GET['id'] results in many errors [BUG]
+- Add titles to pages
 - Visitors not logged in can visit settings.php [BUG]
 - Direct visitor back to previous page if possible when logging out
 - MySQL error when deleting non-empty forum
