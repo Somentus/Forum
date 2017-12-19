@@ -191,7 +191,7 @@ function login($pdo) {
 	    $email = $_POST['email'];
 	    $password = $_POST['password'];
 
-	    $user = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $email]);
+	    $user = query($pdo, "SELECT * FROM users WHERE email = :email", ['email' => $email]);
 	    if(count($user) == 1) {
 	        // User found
 	        $user = $user[0];
@@ -232,7 +232,7 @@ function register($pdo) {
 		
 
 		// Check if username already exists
-		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username= :username", ['username' => $unVerifiedUsername]);
+		$usernameAlreadyExists = query($pdo, "SELECT * FROM users WHERE username = :username", ['username' => $unVerifiedUsername]);
 		if(count($usernameAlreadyExists) >= 1) {
 			$errors[] = "Username already exists.";
 		} else {
@@ -243,7 +243,7 @@ function register($pdo) {
 		if(!filter_var($unVerifiedEmail, FILTER_VALIDATE_EMAIL)) {
 			$errors[] = "Please enter a valid email address." ;
 		} else {
-			$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email= :email", ['email' => $unVerifiedEmail]);
+			$emailAlreadyExists = query($pdo, "SELECT * FROM users WHERE email = :email", ['email' => $unVerifiedEmail]);
 			if(count($emailAlreadyExists) >= 1) {
 				$errors[] = "Email address already exists." ;
 			} else {
@@ -263,7 +263,7 @@ function register($pdo) {
 
 		// If no errors, register user
 		if (empty($errors)) {
-			$query = query($pdo, "INSERT INTO users (id, username, email, password, created_at, updated_at) VALUES (:id, :username, :email, :password, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", ['id' => NULL, 'username' => $username, 'email' => $email, 'password' => $password]);
+			$query = query($pdo, "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)", ['username' => $username, 'email' => $email, 'password' => $password]);
 			$errors[] = "User succesfully registered.";
 		}
 	}
