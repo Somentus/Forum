@@ -2,7 +2,7 @@
 
 function content($pdo) {
 	$id = $_GET['id'];
-	$topic = query($pdo, "SELECT * FROM topics WHERE id= :id", ['id' => $id]);
+	$topic = query($pdo, "SELECT * FROM topics WHERE id = :id", ['id' => $id]);
 	if(count($topic) == 0) {
 		echo "Topic not found!";
 	} else if(count($topic) == 1) {

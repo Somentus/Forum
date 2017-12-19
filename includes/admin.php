@@ -66,7 +66,7 @@ function categories($pdo) {
 		$unverifiedName = $_POST['name'];
 
 		// Check if category already exists
-		$categoryAlreadyExists = query($pdo, "SELECT * FROM categories WHERE name= :name", ['name' => $unverifiedName]);
+		$categoryAlreadyExists = query($pdo, "SELECT * FROM categories WHERE name = :name", ['name' => $unverifiedName]);
 		if(count($categoryAlreadyExists) >= 1) {
 			$errors[] = "Category already exists.";
 		} else {
@@ -83,18 +83,18 @@ function categories($pdo) {
 		$id = $_POST['id'];
 
 		// Retrieve category
-		$query = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM categories WHERE id = :id", ['id' => $id]);
 		$category = $query[0];
 		$name = $category['name'];
 
 		// Check if category contains any forums
-		$query = query($pdo, "SELECT * FROM forums WHERE category_id= :category_id", ['category_id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE category_id = :category_id", ['category_id' => $id]);
 		if( count($query) > 0) {
 			$errors[] = "Category still contains forums. Delete the forums before deleting the category.";
 		}
 
 		if(empty($errors)) {
-			$query = query($pdo, "DELETE FROM categories WHERE id= :id limit 1", ['id' => $id]);
+			$query = query($pdo, "DELETE FROM categories WHERE id = :id limit 1", ['id' => $id]);
 			$errors[] = "Deleted '$name' from categories.";
 		}
 	} else if (isset($_POST['priority'])) {
@@ -108,7 +108,7 @@ function categories($pdo) {
 		} else if($priority == "Down") {
 			$change--;
 		}
-		$query = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM categories WHERE id = :id", ['id' => $id]);
 		$category = $query[0];
 		$oldPriority = $category['priority'];
 		if($oldPriority == 0 && $change == -1) {
@@ -116,7 +116,7 @@ function categories($pdo) {
 			$errors[] = "Priority is already 0, can not lower priority.";
 		}
 		$newPriority = $oldPriority + $change;
-		$query = query($pdo, "UPDATE categories SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
+		$query = query($pdo, "UPDATE categories SET priority = :priority WHERE id = :id", ['id' => $id, 'priority' => $newPriority]);
 		if(empty($errors)) {
 			$errors[] = "Priority succesfully changed by $change to $newPriority.";
 		}
@@ -166,7 +166,7 @@ function adminForums($pdo) {
 		$name = htmlspecialchars($forum['name']);
 		$priority = $forum['priority'];
 		$category_id = $forum['category_id'];
-		$category_name = htmlspecialchars(query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $category_id])[0]['name']);
+		$category_name = htmlspecialchars(query($pdo, "SELECT * FROM categories WHERE id = :id", ['id' => $category_id])[0]['name']);
 		$created_at = $forum['created_at'];
 		$updated_at = $forum['updated_at'];
 
@@ -207,7 +207,7 @@ function forums($pdo) {
 		$unverifiedCategoryId = $_POST['category'];
 
 		// Check if category exists
-		$category = query($pdo, "SELECT * FROM categories WHERE id= :id", ['id' => $unverifiedCategoryId]);
+		$category = query($pdo, "SELECT * FROM categories WHERE id = :id", ['id' => $unverifiedCategoryId]);
 		if(count($category) == 0) {
 			$errors[] = "Category not found.";
 		} else {
@@ -215,7 +215,7 @@ function forums($pdo) {
 		}
 
 		// Check if forum already exists
-		$forumAlreadyExists = query($pdo, "SELECT * FROM forums WHERE name= :name", ['name' => $unverifiedName]);
+		$forumAlreadyExists = query($pdo, "SELECT * FROM forums WHERE name = :name", ['name' => $unverifiedName]);
 		if(count($forumAlreadyExists) >= 1) {
 			$errors[] = "Forum already exists.";
 		} else {
@@ -233,7 +233,7 @@ function forums($pdo) {
 		$id = $_POST['id'];
 
 		// Retrieve forum
-		$query = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id]);
 		$forum = $query[0];
 		$name = $forum['name'];
 
@@ -243,7 +243,7 @@ function forums($pdo) {
 		}
 
 		if(empty($errors)) {
-			$query = query($pdo, "DELETE FROM forums WHERE id= :id limit 1", ['id' => $id]);
+			$query = query($pdo, "DELETE FROM forums WHERE id = :id limit 1", ['id' => $id]);
 			$errors[] = "Deleted '$name' from forums.";
 		}
 	} else if (isset($_POST['priority'])) {
@@ -257,7 +257,7 @@ function forums($pdo) {
 		} else if($priority == "Down") {
 			$change--;
 		}
-		$query = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+		$query = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id]);
 		$forum = $query[0];
 		$oldPriority = $forum['priority'];
 		if($oldPriority == 0 && $change == -1) {
@@ -265,7 +265,7 @@ function forums($pdo) {
 			$errors[] = "Priority is already 0, can not lower priority.";
 		}
 		$newPriority = $oldPriority + $change;
-		$query = query($pdo, "UPDATE forums SET priority = :priority WHERE id= :id", ['id' => $id, 'priority' => $newPriority]);
+		$query = query($pdo, "UPDATE forums SET priority = :priority WHERE id = :id", ['id' => $id, 'priority' => $newPriority]);
 		if(empty($errors)) {
 			$errors[] = "Priority succesfully changed by $change to $newPriority.";
 		}

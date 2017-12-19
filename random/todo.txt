@@ -1,8 +1,9 @@
 IN PROGRESS
+- Send email when changing password 
+- Send email when changing email address
 
 SMALL:
 - Fix user links (once user pages have been implemented)
-- Send email when changing password & email
 
 MEDIUM:
 - Make errors prettier
@@ -19,6 +20,7 @@ MEDIUM:
 - After X attempts at logging in, wait Y seconds before you can retry logging in to prevent spamming
 
 BIG:
+- Public user profile
 - Redo portal (https://andwecode.com/create-popup-login-and-signup-form/#live)
 - Routes (clean URL)
 

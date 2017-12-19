@@ -4,7 +4,7 @@ function content($pdo) {
 	$errors = [];
 
 	$id = $_GET['id'];
-	$forum = query($pdo, "SELECT * FROM forums WHERE id= :id", ['id' => $id]);
+	$forum = query($pdo, "SELECT * FROM forums WHERE id = :id", ['id' => $id]);
 	if(count($forum) == 0) {
 		$errors[] = "Forum not found!";
 	} else if(count($forum) == 1) {
@@ -20,7 +20,7 @@ function content($pdo) {
 		echo '	<br />
 				<br />';
 
-		$topics = query($pdo, "SELECT * FROM topics WHERE forum_id= :forum_id", ['forum_id' => $id]);
+		$topics = query($pdo, "SELECT * FROM topics WHERE forum_id = :forum_id", ['forum_id' => $id]);
 		if(count($topics) == 0) {
 			echo "No topics yet!";
 		} else {

@@ -17,7 +17,7 @@ function security($pdo) {
 				$oldUsername = $user['username'];
 
 				if($oldUsername != $newUsername) {
-					query($pdo, "UPDATE users SET username = :username WHERE id= :id", ['id' => $_SESSION['id'], 'username' => $newUsername]);
+					query($pdo, "UPDATE users SET username = :username WHERE id = :id", ['id' => $_SESSION['id'], 'username' => $newUsername]);
 				}
 				$errors[] = "Username succesfully changed to $newUsername.";
 			}
