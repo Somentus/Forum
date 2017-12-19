@@ -264,6 +264,41 @@ function register($pdo) {
 		// If no errors, register user
 		if (empty($errors)) {
 			$query = query($pdo, "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)", ['username' => $username, 'email' => $email, 'password' => $password]);
+
+			$user_id = $pdo->lastInsertId();
+			$uuid = generate_uuid();
+	
+			$query = query($pdo, "INSERT INTO activation_keys (user_id, uuid) VALUES (:user_id, :uuid)", ['user_id' => $user_id, 'uuid' => $uuid]);
+
+			$to = $email;
+			$subject = 'Registration complete!';
+			$message = '
+			<!DOCTYPE HTML>
+
+			<html lang="en">
+			<head>
+			  <meta charset="utf-8">
+			  <title>'.$subject.'</title>
+			</head>
+			<body>
+			  <p>Welcome to the website!.</p>
+			  <p>Please click here to activate your account:</p>
+			  <a href="http://localhost/activate.php?uuid='.$uuid.'&user_id='.$user_id.'">CLICKITY</a>
+			</body>
+			</html>
+			';
+
+			// To send HTML mail, the Content-type header must be set
+			$headers[] = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+			// Additional headers
+			$headers[] = 'To: Somentus <somentus@gmail.com>';
+			$headers[] = 'From: Functional Forum <somentusforum@gmail.com>';
+
+			// Mail it
+			mail($to, $subject, $message, implode("\r\n", $headers));
+
 			$errors[] = "User succesfully registered.";
 		}
 	}

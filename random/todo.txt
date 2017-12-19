@@ -1,8 +1,8 @@
 IN PROGRESS
-- Implement mail system for activation of account after registration
 
 SMALL:
 - Fix user links (once user pages have been implemented)
+- Send email when changing password & email
 
 MEDIUM:
 - Make errors prettier
@@ -32,6 +32,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Implement mail system for activation of account after registration
 - Implement mail system for reset password
 - Reset password (when not logged in)
 - Visiting forum.php or topic.php without $_GET['id'] results in many errors [BUG]

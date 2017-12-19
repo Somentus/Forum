@@ -44,23 +44,18 @@ function resetPassword($pdo) {
 				query($pdo, "INSERT INTO reset_passwords (user_id, uuid) VALUES (:user_id, :uuid)", ['user_id' => $user_id, 'uuid' => $uuid]);
 			}
 
-			// Multiple recipients
-			$to = $user['email']; // note the comma
-
-			// Subject
+			$to = $user['email'];
 			$subject = 'Reset Password';
-
-			// Message
 			$message = '
 			<!DOCTYPE HTML>
 
 			<html lang="en">
 			<head>
 			  <meta charset="utf-8">
-			  <title>Reset Password</title>
+			  <title>'.$subject.'</title>
 			</head>
 			<body>
-			  <p>You\'ve request your password to be reset.</p>
+			  <p>You have request your password to be reset.</p>
 			  <p>Please click here to enter a new password:</p>
 			  <a href="http://localhost/new_password.php?uuid='.$uuid.'&user_id='.$user_id.'">CLICKITY</a>
 			</body>
