@@ -7,6 +7,10 @@ $pdo = DB();
 require_once($_SERVER["DOCUMENT_ROOT"].'/includes/codes.php');
 require_once($_SERVER["DOCUMENT_ROOT"].'/includes/reset_password.php');
 
+if(isLoggedIn()) {
+	header('Location: /settings.php');
+}
+
 $errors = [];
 if(isset($_POST['resetPassword'])) {
 	$errors = resetPassword($pdo);
