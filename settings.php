@@ -155,7 +155,7 @@ if(isset($_POST['securitySubmit'])) {
 										Birthdate
 									</label>
 									<div class="input-group col-md-8">
-										<input class="form-control" id="inputBirthdate" type="date" name="birthdate">
+										<input class="form-control" id="inputBirthdate" type="date" name="birthdate" value="<?php echo getBirthdate($pdo); ?>">
 									</div>
 								</div>
 
@@ -166,7 +166,7 @@ if(isset($_POST['securitySubmit'])) {
 										Bio
 									</label>
 									<div class="input-group col-md-8">
-										<textarea name="bio" class="form-control" id="inputBio" rows="5"><?php retrieveBio($pdo, $_SESSION['id']); ?></textarea>
+										<textarea name="bio" class="form-control" id="inputBio" rows="5"><?php echo getBio($pdo); ?></textarea>
 									</div>
 								</div>
 

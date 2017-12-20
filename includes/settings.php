@@ -183,8 +183,11 @@ function profile($pdo) {
 		}
 
 		if(isset($_POST['birthdate']) && !empty($_POST['birthdate'])) {
-			query($pdo, "UPDATE users SET birth_date = :birth_date WHERE id = :id", ['id' => $_SESSION['id'], 'birth_date' => $_POST['birthdate']]);
-			$errors[] = "Birthdate succesfully changed.";
+			$oldBirthdate = query($pdo, "SELECT * FROM users WHERE id = :id", ['id' => $_SESSION['id']])[0]['birth_date'];
+			if($oldBirthdate != $_POST['birthdate']) {
+				query($pdo, "UPDATE users SET birth_date = :birth_date WHERE id = :id", ['id' => $_SESSION['id'], 'birth_date' => $_POST['birthdate']]);
+				$errors[] = "Birthdate succesfully changed.";
+			}
 		}
 	}
 
@@ -196,11 +199,19 @@ function getUser($pdo, $id) {
 }
 
 function getUsername($pdo) {
-	return getUser($pdo, $_SESSION['id'])['username'];;
+	return getUser($pdo, $_SESSION['id'])['username'];
 }
 
 function getEmail($pdo) {
-	return getUser($pdo, $_SESSION['id'])['email'];;
+	return getUser($pdo, $_SESSION['id'])['email'];
+}
+
+function getBirthdate($pdo) {
+	return getUser($pdo, $_SESSION['id'])['birth_date'];
+}
+
+function getBio($pdo) {
+	return getUser($pdo, $_SESSION['id'])['bio'];
 }
 
 ?>

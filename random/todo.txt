@@ -12,7 +12,6 @@ MEDIUM:
 - Settings->Profile form: on submit, page refreshes to Security tab, rather than Profile tab. [BUG]
 - Fix/remove glyphicons from Admin tables [BUG]
 - Portal doesn't show up outside index.php [BUG]
-- Make settings show the users' own information (username, email address, birthdate etc)
 - Add user page (public profile)
 - Form validation (https://getbootstrap.com/docs/4.0/components/forms/#server-side)
 - Rework location display in navbar
@@ -34,6 +33,7 @@ IDEA:
 - In user settings, toggle between "Last post in forum" and "Last unread post in forum" or maybe even "Last unread post in tracked topics" (maybe even toggle per category and/or per forum)
 
 DONE:
+- Make settings show the users' own information (username, email address, birthdate etc)
 - Display users' current username and email address on settings page
 - Send email when changing password
 - Send email when changing username
