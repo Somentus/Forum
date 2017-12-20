@@ -23,7 +23,7 @@ function newPasswordForm($pdo, $uuid, $user_id) {
 			</form>
 		';
 	} else {
-		header('Location: /');
+		echo "Password reset has already been used. Please retry: <a href='http://localhost/reset_password.php'>here</a>.";
 	}
 }
 
@@ -34,7 +34,7 @@ function newPassword($pdo) {
 		$user_id = $_GET['user_id'];
 		$uuid = $_GET['uuid'];
 		$resetPasswordAlreadyUsed = query($pdo, "SELECT * FROM reset_passwords WHERE user_id = :user_id AND uuid = :uuid", ['user_id' => $user_id, 'uuid' => $uuid]);
-		if(count($resetPasswordAlreadyUsed) == 0) {
+		if(count($resetPasswordAlreadyUsed) == 1) {
 			$unVerifiedPassword = $_POST['password'];
 			$uuid = $_GET['uuid'];
 			$user_id = $_GET['user_id'];
